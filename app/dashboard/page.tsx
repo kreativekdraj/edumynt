@@ -275,16 +275,23 @@ export default function DashboardPage() {
 
       {/* Mobile sidebar overlay */}
       {sidebarOpen && (
-        <div className="lg:hidden">
-          <div className="fixed inset-0 z-50 bg-gray-900/80" onClick={() => setSidebarOpen(false)} />
-          <div className="fixed inset-y-0 left-0 z-50 w-72 bg-white dark:bg-gray-800 px-6 py-6 shadow-xl">
-            <div className="flex items-center gap-3 mb-8">
+        <>
+          <div 
+            className="lg:hidden fixed inset-0 z-50 bg-black/50 backdrop-blur-sm transition-opacity duration-300" 
+            onClick={() => setSidebarOpen(false)} 
+          />
+          <div className={`
+            lg:hidden fixed inset-y-0 left-0 z-50 w-72 bg-white dark:bg-gray-800 shadow-xl
+            transform transition-transform duration-300 ease-in-out
+            ${sidebarOpen ? 'translate-x-0' : '-translate-x-full'}
+          `}>
+            <div className="flex items-center gap-3 mb-8 px-6 py-6">
               <div className="bg-blue-600 p-2 rounded-lg">
                 <BookOpen className="h-6 w-6 text-white" />
               </div>
               <span className="text-xl font-semibold text-gray-900 dark:text-white">Edumynt</span>
             </div>
-            <nav>
+            <nav className="px-6">
               <ul className="space-y-1">
                 {sidebarSections.map((section) => (
                   <React.Fragment key={section.title}>
@@ -326,7 +333,7 @@ export default function DashboardPage() {
               </ul>
             </nav>
           </div>
-        </div>
+        </>
       )}
 
       {/* Settings Sidebar */}
