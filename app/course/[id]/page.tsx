@@ -30,6 +30,7 @@ import {
   getCourseWithLessons, 
   isUserEnrolledInCourse, 
   enrollUserInCourse,
+  getPublishedCourses,
   type Course,
   type Lesson 
 } from '@/lib/supabase-queries';
@@ -42,6 +43,20 @@ import { Alert, AlertDescription } from '@/components/ui/alert';
 
 interface CourseWithLessons extends Course {
   lessons: Lesson[];
+}
+
+// Required for static export builds
+export async function generateStaticParams() {
+  try {
+    const courses = await getPublishedCourses();
+    return courses.map((course) => ({
+      id: course.id,
+    }));
+  } catch (error) {
+    console.error('Error generating static params:', error);
+    // Return empty array as fallback
+    return [];
+  }
 }
 
 export default function CourseDetailsPage() {
