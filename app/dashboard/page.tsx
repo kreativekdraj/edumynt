@@ -52,6 +52,7 @@ export default function DashboardPage() {
   const [enrolledCourses, setEnrolledCourses] = useState<UserCourseEnrollment[]>([]);
   const [coursesLoading, setCoursesLoading] = useState(true);
   const [mounted, setMounted] = useState(false);
+  const [activeSection, setActiveSection] = useState('enrolled');
   const router = useRouter();
   const [emblaRef, emblaApi] = useEmblaCarousel({ loop: false, align: 'start', containScroll: 'trimSnaps' });
 
@@ -130,6 +131,49 @@ export default function DashboardPage() {
     fetchCourses();
   }, [user, mounted]);
 
+  // Intersection Observer for active section detection
+  useEffect(() => {
+    if (activeTab !== 'courses') return;
+
+    const observer = new IntersectionObserver(
+      (entries) => {
+        entries.forEach((entry) => {
+          if (entry.isIntersecting && entry.intersectionRatio > 0.5) {
+            const sectionId = entry.target.getAttribute('data-section');
+            if (sectionId) {
+              setActiveSection(sectionId);
+            }
+          }
+        });
+      },
+      {
+        threshold: [0.1, 0.5, 0.9],
+        rootMargin: '-100px 0px -50% 0px'
+      }
+    );
+
+    const sections = [enrolledRef.current, englishRef.current, psychologyRef.current, mathematicsRef.current];
+    sections.forEach((section) => {
+      if (section) observer.observe(section);
+    });
+
+    return () => {
+      sections.forEach((section) => {
+        if (section) observer.unobserve(section);
+      });
+    };
+  }, [activeTab]);
+
+  const scrollToSection = (sectionRef: React.RefObject<HTMLDivElement>, sectionId: string) => {
+    if (sectionRef.current) {
+      sectionRef.current.scrollIntoView({ 
+        behavior: 'smooth',
+        block: 'start'
+      });
+      setActiveSection(sectionId);
+    }
+  };
+
   const handleSignOut = async () => {
     await signOut();
   };
@@ -142,25 +186,6 @@ export default function DashboardPage() {
       // Refresh enrolled courses
       const userEnrollments = await getUserEnrolledCourses(user.id);
       setEnrolledCourses(userEnrollments);
-    }
-  };
-
-  // Scroll to section function
-  const scrollToSection = (subject: string) => {
-    const refs = {
-      'enrolled': enrolledRef,
-      'English': englishRef,
-      'Psychology': psychologyRef,
-      'Mathematics': mathematicsRef
-    };
-    
-    const targetRef = refs[subject as keyof typeof refs];
-    if (targetRef?.current) {
-      targetRef.current.scrollIntoView({ 
-        behavior: 'smooth', 
-        block: 'start',
-        inline: 'nearest'
-      });
     }
   };
 
@@ -300,23 +325,16 @@ export default function DashboardPage() {
 
       {/* Mobile sidebar overlay */}
       {sidebarOpen && (
-        <>
-          <div 
-            className="lg:hidden fixed inset-0 z-50 bg-black/50 backdrop-blur-sm transition-opacity duration-300" 
-            onClick={() => setSidebarOpen(false)} 
-          />
-          <div className={`
-            lg:hidden fixed inset-y-0 left-0 z-50 w-72 bg-white dark:bg-gray-800 shadow-xl
-            transform transition-transform duration-300 ease-in-out
-            ${sidebarOpen ? 'translate-x-0' : '-translate-x-full'}
-          `}>
-            <div className="flex items-center gap-3 mb-8 px-6 py-6">
+        <div className="lg:hidden">
+          <div className="fixed inset-0 z-50 bg-gray-900/80" onClick={() => setSidebarOpen(false)} />
+          <div className="fixed inset-y-0 left-0 z-50 w-72 bg-white dark:bg-gray-800 px-6 py-6 shadow-xl transform transition-transform duration-300 ease-in-out">
+            <div className="flex items-center gap-3 mb-8">
               <div className="bg-blue-600 p-2 rounded-lg">
                 <BookOpen className="h-6 w-6 text-white" />
               </div>
               <span className="text-xl font-semibold text-gray-900 dark:text-white">Edumynt</span>
             </div>
-            <nav className="px-6">
+            <nav>
               <ul className="space-y-1">
                 {sidebarSections.map((section) => (
                   <React.Fragment key={section.title}>
@@ -358,7 +376,7 @@ export default function DashboardPage() {
               </ul>
             </nav>
           </div>
-        </>
+        </div>
       )}
 
       {/* Settings Sidebar */}
@@ -430,19 +448,7 @@ export default function DashboardPage() {
         {/* Main content area */}
         <main className="py-6 px-4 sm:px-6 lg:px-8 pb-20 lg:pb-6">
           {activeTab === 'home' && <HomeContent enrolledCourses={enrolledCourses} coursesLoading={coursesLoading} />}
-          {activeTab === 'courses' && (
-            <CoursesContent 
-              courses={courses} 
-              enrolledCourses={enrolledCourses} 
-              onEnroll={handleEnrollInCourse} 
-              coursesLoading={coursesLoading}
-              scrollToSection={scrollToSection}
-              enrolledRef={enrolledRef}
-              englishRef={englishRef}
-              psychologyRef={psychologyRef}
-              mathematicsRef={mathematicsRef}
-            />
-          )}
+          {activeTab === 'courses' && <CoursesContent courses={courses} enrolledCourses={enrolledCourses} onEnroll={handleEnrollInCourse} coursesLoading={coursesLoading} activeSection={activeSection} scrollToSection={scrollToSection} enrolledRef={enrolledRef} englishRef={englishRef} psychologyRef={psychologyRef} mathematicsRef={mathematicsRef} />}
           {activeTab === 'tests' && <TestsContent />}
           {activeTab === 'discuss' && <DiscussContent />}
           {activeTab === 'profile' && <ProfileContent user={user} onSignOut={handleSignOut} />}
@@ -710,6 +716,7 @@ function CoursesContent({
   enrolledCourses, 
   onEnroll, 
   coursesLoading,
+  activeSection,
   scrollToSection,
   enrolledRef,
   englishRef,
@@ -720,12 +727,14 @@ function CoursesContent({
   enrolledCourses: UserCourseEnrollment[], 
   onEnroll: (courseId: string) => void,
   coursesLoading: boolean,
-  scrollToSection: (subject: string) => void,
+  activeSection: string,
+  scrollToSection: (ref: React.RefObject<HTMLDivElement>, sectionId: string) => void,
   enrolledRef: React.RefObject<HTMLDivElement>,
   englishRef: React.RefObject<HTMLDivElement>,
   psychologyRef: React.RefObject<HTMLDivElement>,
   mathematicsRef: React.RefObject<HTMLDivElement>
 }) {
+
   const isEnrolled = (courseId: string) => {
     return enrolledCourses.some(enrollment => enrollment.course_id === courseId);
   };
@@ -735,9 +744,14 @@ function CoursesContent({
     return enrollment?.progress || 0;
   };
 
-  const subjects = ['enrolled', 'English', 'Psychology', 'Mathematics'];
+  const subjects = [
+    { id: 'enrolled', label: 'Enrolled', ref: enrolledRef },
+    { id: 'English', label: 'English', ref: englishRef },
+    { id: 'Psychology', label: 'Psychology', ref: psychologyRef },
+    { id: 'Mathematics', label: 'Mathematics', ref: mathematicsRef }
+  ];
   
-  const getFilteredCourses = (subject: string) => {
+  const getCoursesForSubject = (subject: string) => {
     if (subject === 'enrolled') {
       return enrolledCourses.map(e => e.course).filter(Boolean) as Course[];
     }
@@ -801,11 +815,15 @@ function CoursesContent({
         <div className="flex gap-2 overflow-x-auto pb-2">
           {subjects.map((subject) => (
             <button
-              key={subject}
-              onClick={() => scrollToSection(subject)}
-              className={`px-4 py-2 rounded-lg text-sm font-medium whitespace-nowrap transition-colors hover:bg-blue-600 hover:text-white bg-white dark:bg-gray-800 text-gray-700 dark:text-gray-300`}
+              key={subject.id}
+              onClick={() => scrollToSection(subject.ref, subject.id)}
+              className={`px-4 py-2 rounded-lg text-sm font-medium whitespace-nowrap transition-colors ${
+                activeSection === subject.id
+                  ? 'bg-blue-600 text-white'
+                  : 'bg-white dark:bg-gray-800 text-gray-700 dark:text-gray-300 hover:bg-gray-100 dark:hover:bg-gray-700'
+              }`}
             >
-              {subject === 'enrolled' ? 'Enrolled' : subject}
+              {subject.label}
             </button>
           ))}
         </div>
@@ -814,11 +832,8 @@ function CoursesContent({
       {/* Course Sections */}
       <div className="space-y-8">
         {/* Enrolled Courses Section */}
-        <div ref={enrolledRef} className="scroll-mt-32">
-          <h2 className="text-xl font-semibold text-gray-900 dark:text-white mb-4">
-            My Enrolled Courses
-          </h2>
-          
+        <div ref={enrolledRef} data-section="enrolled" className="scroll-mt-32">
+          <h2 className="text-xl font-semibold text-gray-900 dark:text-white mb-4">My Enrolled Courses</h2>
           {coursesLoading ? (
             <div className="grid gap-3">
               {[1, 2].map((i) => (
@@ -837,9 +852,9 @@ function CoursesContent({
                 </Card>
               ))}
             </div>
-          ) : getFilteredCourses('enrolled').length > 0 ? (
+          ) : enrolledCourses.length > 0 ? (
             <div className="grid gap-3">
-              {getFilteredCourses('enrolled').map(renderCourseCard)}
+              {enrolledCourses.map(enrollment => enrollment.course && renderCourseCard(enrollment.course))}
             </div>
           ) : (
             <Card>
@@ -847,7 +862,7 @@ function CoursesContent({
                 <BookOpen className="h-12 w-12 text-gray-400 mx-auto mb-4" />
                 <h3 className="font-semibold text-gray-900 dark:text-white mb-2">No enrolled courses yet</h3>
                 <p className="text-gray-500 dark:text-gray-400">Browse and enroll in courses to start learning</p>
-                <Button className="mt-4" onClick={() => scrollToSection('English')}>
+                <Button className="mt-4" onClick={() => scrollToSection(englishRef, 'English')}>
                   Browse Courses
                 </Button>
               </CardContent>
@@ -856,11 +871,8 @@ function CoursesContent({
         </div>
 
         {/* English Courses Section */}
-        <div ref={englishRef} className="scroll-mt-32">
-          <h2 className="text-xl font-semibold text-gray-900 dark:text-white mb-4">
-            English Courses
-          </h2>
-          
+        <div ref={englishRef} data-section="English" className="scroll-mt-32">
+          <h2 className="text-xl font-semibold text-gray-900 dark:text-white mb-4">English Courses</h2>
           {coursesLoading ? (
             <div className="grid gap-3">
               {[1, 2].map((i) => (
@@ -871,7 +883,6 @@ function CoursesContent({
                       <div className="flex-1 space-y-2">
                         <Skeleton className="h-4 sm:h-5 w-3/4" />
                         <Skeleton className="h-3 sm:h-4 w-1/2 hidden sm:block" />
-                        <Skeleton className="h-2 w-full" />
                       </div>
                       <Skeleton className="h-8 w-20 sm:w-24" />
                     </div>
@@ -879,9 +890,9 @@ function CoursesContent({
                 </Card>
               ))}
             </div>
-          ) : getFilteredCourses('English').length > 0 ? (
+          ) : getCoursesForSubject('English').length > 0 ? (
             <div className="grid gap-3">
-              {getFilteredCourses('English').map(renderCourseCard)}
+              {getCoursesForSubject('English').map(renderCourseCard)}
             </div>
           ) : (
             <Card>
@@ -895,11 +906,8 @@ function CoursesContent({
         </div>
 
         {/* Psychology Courses Section */}
-        <div ref={psychologyRef} className="scroll-mt-32">
-          <h2 className="text-xl font-semibold text-gray-900 dark:text-white mb-4">
-            Psychology Courses
-          </h2>
-          
+        <div ref={psychologyRef} data-section="Psychology" className="scroll-mt-32">
+          <h2 className="text-xl font-semibold text-gray-900 dark:text-white mb-4">Psychology Courses</h2>
           {coursesLoading ? (
             <div className="grid gap-3">
               {[1, 2].map((i) => (
@@ -910,7 +918,6 @@ function CoursesContent({
                       <div className="flex-1 space-y-2">
                         <Skeleton className="h-4 sm:h-5 w-3/4" />
                         <Skeleton className="h-3 sm:h-4 w-1/2 hidden sm:block" />
-                        <Skeleton className="h-2 w-full" />
                       </div>
                       <Skeleton className="h-8 w-20 sm:w-24" />
                     </div>
@@ -918,9 +925,9 @@ function CoursesContent({
                 </Card>
               ))}
             </div>
-          ) : getFilteredCourses('Psychology').length > 0 ? (
+          ) : getCoursesForSubject('Psychology').length > 0 ? (
             <div className="grid gap-3">
-              {getFilteredCourses('Psychology').map(renderCourseCard)}
+              {getCoursesForSubject('Psychology').map(renderCourseCard)}
             </div>
           ) : (
             <Card>
@@ -934,11 +941,8 @@ function CoursesContent({
         </div>
 
         {/* Mathematics Courses Section */}
-        <div ref={mathematicsRef} className="scroll-mt-32">
-          <h2 className="text-xl font-semibold text-gray-900 dark:text-white mb-4">
-            Mathematics Courses
-          </h2>
-          
+        <div ref={mathematicsRef} data-section="Mathematics" className="scroll-mt-32">
+          <h2 className="text-xl font-semibold text-gray-900 dark:text-white mb-4">Mathematics Courses</h2>
           {coursesLoading ? (
             <div className="grid gap-3">
               {[1, 2].map((i) => (
@@ -949,7 +953,6 @@ function CoursesContent({
                       <div className="flex-1 space-y-2">
                         <Skeleton className="h-4 sm:h-5 w-3/4" />
                         <Skeleton className="h-3 sm:h-4 w-1/2 hidden sm:block" />
-                        <Skeleton className="h-2 w-full" />
                       </div>
                       <Skeleton className="h-8 w-20 sm:w-24" />
                     </div>
@@ -957,9 +960,9 @@ function CoursesContent({
                 </Card>
               ))}
             </div>
-          ) : getFilteredCourses('Mathematics').length > 0 ? (
+          ) : getCoursesForSubject('Mathematics').length > 0 ? (
             <div className="grid gap-3">
-              {getFilteredCourses('Mathematics').map(renderCourseCard)}
+              {getCoursesForSubject('Mathematics').map(renderCourseCard)}
             </div>
           ) : (
             <Card>
