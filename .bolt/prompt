@@ -1,0 +1,2880 @@
+For all designs I ask you to make, have them be beautiful, not cookie cutter. Make webpages that are fully featured and worthy for production.
+
+When using client-side hooks (useState and useEffect) in a component that's being treated as a Server Component by Next.js, always add the "use client" directive at the top of the file.
+
+Do not write code that will trigger this error: "Warning: Extra attributes from the server: %s%s""class,style"
+
+By default, this template supports JSX syntax with Tailwind CSS classes, the shadcn/ui library, React hooks, and Lucide React for icons. Do not install other packages for UI themes, icons, etc unless absolutely necessary or I request them.
+
+Use icons from lucide-react for logos.
+
+use these as guideline only. 
+# Phase 1 - Part 1: Problem Definition
+## ❓ What Problem Are We Solving?
+Today’s online courses — especially for government exam aspirants — are often fragmented, passive, overpriced, and optimized for profit rather than learning. Learners face poor-quality materials, bloated videos, disconnected test systems, and restrictive platforms.
+
+We aim to build a **student-first**, **ethically monetized**, **multi-platform learning system** that delivers structured, interactive, and deeply engaging education — with total control and transparency.
+
+-----
+## 🔍 Problems & How We Will Solve Them
+### 🎥 Video Lesson Problems
+- **Long, boring, digressive videos**
+- **Passive consumption, no interaction**
+- **Just listening = no learning**
+- **Procrastination disguised as studying**
+- **Invasive self-promotion**
+
+**✅ Solutions**
+
+- 🎯 Short, focused, story-driven videos
+- 🔄 Interactive questions embedded in videos
+- 🎨 Visuals, animations, charts, AI/human voiceovers
+- 🎬 Skippable intros / auto-trimmed intros
+- 🎥 “No-Nonsense Mode” to hide fluff
+-----
+### 📄 Notes & PDF Content Problems
+- **Poor formatting, cluttered layout**
+- **Locked files (can’t print or copy)**
+- **Chopped PDFs in parts**
+- **No structure or flow**
+
+**✅ Solutions**
+
+- 📘 Properly formatted printable PDFs
+- 🔓 Unlock all content for sharing and offline use
+- 🤝 Add donation links inside PDFs (ethically monetize)
+- 📚 Option to download full ebook-style compilations
+- 🔎 Tag-based navigation in notes
+-----
+### 🧪 Test & Practice Problems
+- **No explanations or follow-ups**
+- **Cluttered UI, poor UX**
+- **Costly and generic**
+- **One-size-fits-all practice**
+
+**✅ Solutions**
+
+- 🤖 AI-powered adaptive tests targeting weak areas
+- 🧠 Detailed explanations in text + video
+- 🔁 Follow-up with similar concept questions
+- 🗂 Topic-wise, difficulty-wise filters
+- 💬 AI discussion bot tied to each test
+-----
+### 📱 Platform Access Problems
+- **App-only delivery**
+- **No desktop/web/PWA**
+- **Offline access missing**
+- **Heavy, bloated UX**
+
+**✅ Solutions**
+
+- 🌐 Web-first design with PWA support
+- 📲 Multi-device sync (mobile + desktop)
+- ⬇️ Downloadable content + offline-first mode
+- 🎯 Distraction-free learning mode toggle
+-----
+### 🎓 Education-Specific Problems
+- **Govt exam content is disorganized**
+- **No personalized learning path**
+- **Cramming over deep understanding**
+- **No accountability, low retention**
+
+**✅ Solutions**
+
+- 🧩 Syllabus-based structured roadmap
+- 🔁 “Learn → Practice → Discuss” flow
+- 🧠 Spaced repetition + active recall activities
+- 📅 Smart planner with goals + reminders
+- 🎖 Gamification: streaks, levels, checkpoints
+-----
+### 💸 Market & Ethical Problems
+- **Overpriced, underwhelming content**
+- **Piracy vs. lockdown dilemma**
+- **No trial/free/open options**
+
+**✅ Solutions**
+
+- 💰 Reasonably priced courses
+- 🙌 Piracy-tolerant PDFs with donation buttons
+- 🚀 Open access to selected modules/chapters
+- 🔐 Public/private toggle per course
+-----
+## ✨ Philosophy
+> **Education should be free for all.**\
+> Even if we charge for courses, we respect the learner’s freedom — offering flexible access, offline content, and ethical monetization without locking down value behind paywalls.
+
+-----
+## 🧑‍🎓 Target Audience
+- Students preparing for government exams (SSC, banking, teaching)
+- Subjects: English (full), Educational Psychology (focus), future expansion into Math & Science
+- Mostly mobile users, but increasing PC usage expected
+- Learners who value time, clarity, and offline-friendly resources
+-----
+## ✅ TL;DR
+We’re solving the mess that is modern online learning — by replacing distraction, control, and confusion with clarity, accessibility, and ethical design.
+
+-----
+# 🧠 Phase 1 - Part 2: Goal Statement
+## 🎯 1. Elevator Pitch
+> **“A distraction-free, ethically priced learning platform for government exam aspirants — combining psychology-based teaching, open access, and automation to empower students, not exploit them.”**
+
+-----
+## 💼 2. Business Goals
+- Sell high-quality courses at a reasonable price without locking content behind aggressive paywalls.
+- Allow free sharing and downloads (piracy-tolerant), with donation/support links embedded ethically.
+- Build a self-hosted platform that gives full control over content, access, and user data.
+- Use AI and automation to reduce manual teaching overhead while maintaining effectiveness.
+- Create a trusted, student-first brand (Edumynt) known for its clarity, fairness, and depth.
+-----
+## 📏 3. Success Criteria
+- ✅ Students complete at least 75% of enrolled content (low dropout rate)
+- 💬 Frequent feedback on usefulness, clarity, and simplicity
+- 🧠 High retention and learning effectiveness (improved test results)
+- 📥 Widespread sharing of PDFs and notes with voluntary donations
+- 💵 Sustainable revenue through affordable course sales and optional contributions
+- 🔁 Low maintenance needs — updates and automation reduce ongoing workload
+- 📱 Seamless access across mobile, desktop, and offline — no platform lock-in
+-----
+## 🔑 Summary
+The goal is to create a **scalable**, **student-friendly**, and **freedom-respecting** course platform that aligns with your motto:
+> “**Education should be free for all.**”\
+> Even if it’s sold, it should never feel exploitative — and always put the learner first.
+
+-----
+# 🧠 Phase 1 - Part 3: User Personas
+## 👑 1. Admin (You - Platform Owner)
+### 🎯 Goals
+- Deliver high-quality, affordable courses
+- Maintain full control over content and data
+- Ensure platform scales without daily maintenance
+- Respect student attention and privacy
+- Build trust and long-term brand (Edumynt)
+### 😣 Pain Points
+- Repetitive admin work, uploads, feedback collection
+- Balancing open access and monetization
+- Dependency on platforms with poor control
+### 📱 Devices / Habits
+- Laptop/desktop for building and managing
+- Mobile for testing UX
+- Hands-on with automation, prefers self-hosting
+-----
+## 🛠 2. Team (Dev/Content Support)
+### 🎯 Goals
+- Assist in course creation and tech setup
+- Fix bugs, maintain infrastructure, optimize UX
+- Keep platform running smoothly with clear task division
+### 😣 Pain Points
+- Vague or changing requirements
+- Manual or repetitive workflows
+- Tight deadlines without specs
+### 📱 Devices / Habits
+- Desktop/laptop-first
+- Uses git, markdown, task trackers
+- Async + tool-heavy workflow
+-----
+## 🎓 3. Students (Main Learners)
+### 🎯 Goals
+- Crack government exams (SSC, banking, teaching)
+- Master English and Educational Psychology
+- Learn independently, affordably, and flexibly
+- Study offline and across devices
+### 😣 Pain Points
+- Long boring videos, no interaction
+- Poorly formatted PDFs
+- Expensive test series with no explanations
+- No guidance on weak areas
+- Cluttered platforms, no offline access
+### 📱 Devices / Habits
+- Android-dominant mobile users
+- Short study bursts (10–30 min)
+- Print PDFs when possible
+- Prefers clear structure, dislikes bloated apps
+- Willing to donate or pay if value is obvious
+-----
+## 🤖 4. AI Assistants (Embedded AI Agents)
+### 🎯 Goals
+- Assist learners, admins, and team across workflows
+- Answer questions, summarize content, test understanding
+- Automate analysis, feedback, and follow-ups
+### 🔧 Roles (Planned)
+- **AI Tutor** – concept explanation, answer doubts
+- **AI Test Analyst** – analyze performance, suggest practice
+- **AI Content Assistant** – generate summaries, create follow-up Qs
+- **AI Dev Assistant** – help with bug reports, dev notes, code review
+### 😣 Pain Points
+- Limited context unless well-integrated
+- Needs prompt engineering for accuracy
+- Requires clear separation of capabilities per role
+-----
+## 👀 Guest / Preview Users
+### 🎯 Goals
+- Explore select free preview lessons before buying
+- Get a feel for course quality and UX
+### ✅ Features
+- No login required to view preview lessons
+- Preview clearly marked on course page
+- Analytics tracked separately from enrolled users
+-----
+# ✅ Essential Feature Wishlist (Must-Have)
+## 🎓 Learning Features
+- 💯 Interactive text lessons with embedded questions
+- 💯 Short, focused video lessons (modular + topic-based)
+- 💯 In-video questions (auto-pause, MCQ, drag-and-drop)
+- 💯 Dual voice options (AI + human)
+- 💯 Chapter-based ebook reader with highlights
+- 💯 Downloadable & printable PDFs
+- ✅ Text + audio narration toggle
+- 💯 Lesson progress tracking
+- ✅ Dark mode / reading mode
+- 💯 Preview lessons (no login required)
+-----
+## 🧪 Testing & Practice
+- 💯 AI-powered test generator based on weak areas
+- 💯 Detailed answer explanations (text + video)
+- 💯 Follow-up questions after mistakes
+- ✅ Timed mocks with OMR simulation
+- ✅ Topic-wise practice sets
+- 💯 Smart “Revision Queue” based on errors
+- ✅ Leaderboard toggle
+- 💯 Bookmark for review
+- ✅ Gamified streaks, XP, progress rewards
+- 💯 Mental tricks & acronyms per topic
+-----
+## 📈 Personalization + AI Learning Tools
+- 💯 AI Tutor Assistant (per lesson)
+- 💯 AI Test Coach with concept heatmap
+- ✅ Performance dashboard
+- 💯 Learning planner (goals → lessons → tests)
+- ✅ Smart reminders
+- ✅ Custom difficulty setting
+-----
+## 🧾 Notes / PDFs
+- 💯 Well-formatted, print-friendly PDFs
+- 💯 Donation links embedded in PDFs
+- ✅ Web-based ebook reader (optional)
+- ✅ PDF viewer with annotations
+- 💯 Searchable/tagged notes
+- 💯 Vocabulary/definition tooltips
+- 💯 Blog posts for psychology/memory strategies
+-----
+## 📱 Platform Access
+- 💯 Web app + PWA installable
+- 💯 Offline-first mode
+- 💯 Multi-device sync
+- 💯 No-login preview mode
+- ✅ Low-bandwidth mode
+- 💯 Progress sync via Supabase auth
+-----
+## 🛠 Admin & Author Tools
+- 💯 Markdown editor with live preview
+- ✅ Upload → auto-split into lessons/tests
+- ✅ Course draft → publish workflow
+- ✅ Access control (free, paid, preview)
+- ✅ Simulate user view
+- ✅ Drag-and-drop builder
+-----
+## 🤖 AI Assistant System
+- 💯 AI Doubt Solver (context-aware)
+- 💯 AI Test Generator (dynamic + intelligent)
+- ✅ AI Content Assistant (summaries, follow-ups)
+- ✅ Voice-based AI access (ask via mic)
+- 💯 Role-based AI system (Tutor, Tester, Content, Dev)
+-----
+## 💬 Community / Discussion
+- 💯 Lesson-level Q&A thread
+- ✅ Question-level discussions
+- ✅ Anonymous question toggle
+- 💯 Telegram/Discord integration (linked via UI)
+- ✅ Notifications about active groups
+- 💯 Sitewide “Ask AI / Discuss” button
+-----
+## 💰 Ethical Monetization
+- 💯 One-time course purchase (no subscription)
+- 💯 No lock-in: download everything
+- 💯 Donation options inside content
+- 💯 Transparent pricing & “Why We Charge” modal
+- ✅ QR for offline donations
+-----
+## 🎨 Design / UX
+- 💯 Distraction-free reading/video mode
+- ✅ Micro-feedback (confetti, sounds)
+- ✅ Breadcrumbs + sidebar nav
+- ✅ Accessibility toggles (large text, dyslexia font)
+-----
+###💡 Nice-to-Have Features
+
+- 💡 Live AI class summarizer (from recordings)
+- 💡 Markdown + WYSIWYG toggle editor
+- 💡 AI-generated flashcards per lesson
+- 💡 “Suggested next lesson” AI recs
+- 💡 Student streak emails / reminders
+- 💡 Peer-reviewed community notes
+- 💡 Per-lesson “difficulty rating” from students
+- 💡 Memory recall tracker (did you remember this?)
+- 💡 Offline content export to EPUB/ZIP
+- 💡 Calendar sync with planner
+- 💡 Speech speed control for audio
+- 💡 Custom test templates (e.g. 50 MCQs random)
+- 💡 Printable OMR sheets + camera scanner
+-----
+### 🌈 Stretch Goals
+- 🌈 Voice command navigation (“Go to next question”)
+- 🌈 AI podcast episode generator (based on lessons)
+- 🌈 Animated lesson builder (Lottie, motion)
+- 🌈 Collaborative flashcards / memory games
+- 🌈 Offline sync via USB (school mode)
+- 🌈 Mnemonic library with community contributions
+- 🌈 Teacher dashboard (multiple instructors)
+- 🌈 Story-mode course builder (narrative format)
+- 🌈 Real-time co-learning mode (watch/study together)
+- 🌈 AR-based diagrams for science/math (future)
+-----
+# 🧱 Phase 2 - Part 5: App Architecture Overview
+This document outlines the technical architecture for the Edumynt learning platform. It’s designed to be performant, scalable, privacy-respecting, and optimized for fast delivery across devices.
+
+-----
+## ⚙️ Frontend
+- **Framework**: Next.js (App Router)
+- **Rendering Strategy**:
+  - SSR for public pages (SEO, speed)
+  - SPA/CSR for authenticated in-app experiences
+- **Styling**: Tailwind CSS + shadcn/ui
+- **Routing**: File-based routing with dynamic paths for courses, lessons, questions
+- **Interactivity**: v0.dev integration (for rapid UI prototyping), client-side hydration
+-----
+## 🧠 Backend / Services
+- **Backend Platform**: Supabase
+  - **Database**: PostgreSQL
+  - **Auth**: Supabase Auth (email/password), anonymous preview support
+  - **Storage**: Supabase Storage for PDFs, images, optionally videos
+  - **Functions**: Supabase Edge Functions for secure AI logic, access control, analytics
+- **External AI Services**: OpenAI API via Edge Functions
+  - Accessed using secure API keys (not exposed to frontend)
+-----
+## 🔐 Authentication
+- Supabase Auth (email/password login)
+- Anonymous access to **preview lessons**
+- Role-based access handled via Supabase RLS (Row-Level Security)
+- Future: add support for OTP/social login if needed
+-----
+## 🧾 File & Media Storage
+- **Supabase Storage**:
+  - PDFs (notes, books)
+  - Thumbnails, icons, attachments
+- **Video Hosting Options** (to be finalized):
+  - Self-hosted with Cloudflare R2 or Bunny.net CDN
+  - Or external embed from YouTube/Vimeo for public preview
+- Downloadable content supported with optional tracking
+-----
+## 📣 Notifications & Realtime
+- **In-app notifications** (e.g. new lesson, replies)
+- **Optional email notifications** (reminders, results)
+- Supabase Realtime or polling for notifications
+- Announcements shown as site banners or modals
+-----
+## 🧠 AI Integration
+- **Architecture**:
+  - Edge Function endpoints call OpenAI using secure keys
+  - Role-based assistant logic (Tutor, Test Coach, Content Assistant)
+- **Used For**:
+  - Answering questions (AI Tutor)
+  - Summarizing lessons
+  - Analyzing test results
+  - Generating quizzes, flashcards
+-----
+## 💬 Community & Collaboration
+- **External**: Telegram + Discord (for audio chat & community)
+  - Notified via in-app banners/pages
+- **Internal**:
+  - Per-lesson and per-question discussion threads
+  - Anonymous mode for students
+  - AI-enhanced discussion suggestions
+-----
+## 📱 Multi-Platform & Offline Support
+- **PWA Enabled**: installable on mobile and desktop
+- **Responsive UI**: mobile-first design, scalable up to desktop
+- **Offline Support**:
+  - Service workers cache key pages
+  - PDFs/videos downloadable
+  - Local progress sync, resume on reconnect
+-----
+## 🧪 Dev & Deployment
+- **CI/CD**: GitHub → Supabase CLI → Edge Function deploy
+- **Environment**: Docker-based local dev with Supabase CLI
+- **Monitoring**: Supabase logs + optional analytics via self-hosted Plausible or Umami
+- **Testing**:
+  - Unit + integration (Playwright, Vitest)
+  - Manual QA per screen
+-----
+## 🔐 Security & Access Control
+- RLS policies for:
+  - Role-based data access (admin, student, preview)
+  - Lesson visibility rules (public/paid/preview)
+- All AI + storage access controlled via Edge Functions (never expose secrets)
+- Supabase Auth tokens secured via HTTP-only cookies
+-----
+## 🧩 Optional Integrations (planned)
+- **Plausible/Umami** (privacy-first analytics)
+- **Stripe (or LemonSqueezy)** for future course sales
+- **Mailgun / Resend** for transactional email
+- **Speech-to-Text API** for voice interaction
+- **Telegram/Discord API** for user sync and bot announcements
+-----
+## ✅ Philosophy
+- 100% user-owned content
+- AI is an assistant, not the product
+- Piracy-tolerant with ethical nudges
+- Open, inspectable, and user-respecting backend
+-----
+# 🧭 Phase 2 - Part 6: User Flow Maps
+This document outlines the key user flows for the Edumynt learning platform — from preview to personalized learning and AI assistance.
+
+-----
+## 🔓 1. Preview Content (No Login)
+- User lands on **Home Page**
+- Browses available courses
+- Clicks a **Preview Lesson**
+- Lesson page opens (video or text)
+- User interacts with content
+- Optional mini quiz may appear
+- Non-intrusive banner: "Sign up to track your progress"
+- No login required
+-----
+## 🔐 2. Sign Up / Login
+- User clicks **Login/Sign Up**
+- Email/password entered
+- Email verified (optional)
+- Redirected to dashboard
+- Existing session auto-logs in
+- Optional: Anonymous session upgrades to full account
+-----
+## 🎓 3. Enroll in Course
+- From course page → Click **Enroll** or **Buy**
+  - If paid → Payment gateway → Confirmation → Unlock
+  - If free → Instant unlock
+- Redirect to course dashboard or first lesson
+-----
+## 📘 4. Lesson Learning Flow
+- User opens **Course Dashboard**
+- Clicks a **Lesson**
+- Lesson page shows:
+  - 💡 If **video + text** → both shown, user chooses
+  - 💡 If **video-only** or **text-only** → only one shown
+- Optional: Lesson-specific quiz at the bottom
+- User clicks **Mark Complete**
+- 💥 Hidden, non-intrusive buttons:
+  - [Next Lesson] / [Previous Lesson] appear on scroll or swipe
+- Optional: “Ask AI” for doubts
+-----
+## 🔄 4a. Between-Lesson Quiz Flow
+- After marking a lesson complete:
+  - If quiz is required → Quiz Page auto-opens
+  - If not → Prompt: “Ready for the next lesson?”
+- Quiz evaluates comprehension
+- Based on score → direct to next lesson or review prompt
+-----
+## 🧪 5. Test & Practice Flow
+- User chooses: Topic Test / Smart Test / Full Mock
+- Test interface:
+  - MCQs, timer, flag, submit
+- On submit:
+  - Score
+  - Explanations (text/video)
+  - “Your weak topics” map
+  - Follow-up questions for mistakes
+- Retry or review option
+-----
+## 🧠 6. Ask AI Tutor
+- Available on:
+  - Lessons, Questions, Test Results
+- User clicks “Ask AI”
+- Modal opens with context auto-filled
+- User enters query
+- AI replies with:
+  - Explanation
+  - Links to related lessons/tests
+  - Option to bookmark/save
+-----
+## 💬 7. Community & Discussion
+- Per-lesson or per-question “Discuss” button
+  - Opens in-app thread (if enabled)
+  - Or links to Telegram/Discord group
+- Notifications shown on platform:
+  - “Join live chat on Telegram”
+  - “Community answers available”
+-----
+## ✅ 8. Track Progress / Study Planning
+- From Dashboard:
+  - View enrolled courses + completion %
+  - XP, streaks, activity graph
+- AI-generated:
+  - Weekly targets
+  - Suggested revision
+  - Smart planner PDF
+- Offline support: download planner + notes
+-----
+## ⚡ Bonus UX Features (Integrated Across Flows)
+- Minimalist navigation buttons (Next/Prev lesson):
+  - Appear on hover, swipe, or key press
+  - Invisible in distraction-free mode
+- In-lesson quiz alerts (non-blocking)
+- Smart resume: remembers last video timestamp or scroll position
+-----
+# 🧩 Phase 2 - Part 7: Screen Inventory
+This file lists all key screens/views in the Edumynt learning platform. Each `[[Screen Name]]` should later become its own `.md` with full screen-level planning.
+
+-----
+## 🔐 Access & Auth Screens
+- [[Login Screen]]
+- [[Signup Screen]]
+- [[Verify Email Screen]]
+- [[Reset Password Screen]]
+- [[Session Middleware Handler]]
+-----
+## 🏠 Public screens
+- [[Home Page]]
+- [[User Dashboard Profile Page]]
+- [[Purchase History Screens]]
+- [[Streaks and Leaderboard]]
+-----
+## 🎓 Learning & Content Screens
+- [[Course Dashboard]]
+- [[All Courses Page]]
+- [[Lesson Page Video Text]]
+- [[Inter-Lesson Quiz Page]]
+- [[Test Page (Mock Practice)]]
+- [[Test Result Page]]
+- [[Test Leaderboard Page]]
+- [[Test Explanation Screen]]
+- [[Bookmark Screen]]
+- [[Revision Planner Screen]]
+- [[Daily Practice Screen]]
+-----
+## 📚 Notes & Reading Tools
+- [[Notes Library Page]]
+- [[Single Note View]]
+- [[Ebook Reader View]]
+-----
+## 🤖 AI Assistant Interfaces
+- [[AI Ask Page]]
+- [[AI Test Coach Page]]
+- [[AI Lesson Helper Sidebar]]
+-----
+## 💬 Community & Interaction
+- [[Discussion Thread Page]]
+- [[Community Links Page]]
+- [[User Notifications Page]]
+-----
+## 🧑‍💼 Admin & Authoring Tools
+- [[Admin Dashboard]]
+- [[Course Manager Page]]
+- [[Lesson Editor Page]]
+- [[Question Manager Page]]
+- [[Media Upload Manager Page]]
+- [[Admin Analytics Page]]
+-----
+## 🛠 Misc UX / Account Screens
+- [[404 Not Found Page]]
+- [[Privacy Policy Page]]
+- [[Contact Us]]
+-----
+## 🖨️ Optional Printable / Export Views
+- [[Printable Lesson View]]
+- [[Downloadable PDF View (Ebook)]]
+# 🎨 Phase 4.1: Component Inventory
+> UI building blocks for Edumynt Web App — based on **shadcn/ui** + Tailwind CSS
+
+-----
+## ✅ Button Variants
+- `PrimaryButton` – main CTAs like "Enroll", "Start Test"
+- `SecondaryButton` – less urgent actions like "Learn More"
+- `GhostButton` – minimal actions (used in headers, cards)
+- `DestructiveButton` – delete, unsubscribe
+- `LoadingButton` – handles isLoading state + spinner
+- `IconButton` – icon-only buttons (e.g., settings, AI, close)
+-----
+## ✅ Input Components
+- `TextInput` – login, ask AI, forms
+- `Textarea` – notes, AI, discussions
+- `PasswordInput` – with visibility toggle
+- `SearchInput` – courses, tests, notes
+- `Select / Dropdown` – filters, sort, settings
+- `RadioGroup` – MCQ, quiz config
+- `Checkbox` – bulk selects, preferences
+- `Slider` – font size or video speed
+- `Switch` – dark mode, focus mode
+-----
+## ✅ Cards
+- `CourseCard` – shows title, image, progress, CTA
+- `LessonCard` – inside course structure
+- `TestCard` – title, score, time, action
+- `NoteCard` – for ebook/note previews
+- `UserCard` – comments, leaderboard
+- `MediaCard` – file type, name, usage
+-----
+## ✅ Layout Components
+- `AppShell` – header, sidebar, content, bottom nav
+- `SidebarPanel` – used in Lesson/Test pages (tabs: Lessons, Comments, Notes)
+- `PageHeader` – title + actions like edit, export
+- `EmptyState` – fallback view when nothing exists yet
+- `StickyFooterBar` – submit, mark done, continue buttons
+-----
+## ✅ Utility Components
+- `Badge` – for: 🔓 Preview / 🔒 Locked / ✅ Completed / 🧠 AI Enabled
+- `Progress` – course/test progress bars
+- `Alert` – quiz feedback, confirmations
+- `Toast` – brief status updates
+- `Dialog` – modals for create/edit/confirm
+- `Popover` – theme toggle, profile, question hint
+- `Tabs` – lesson/test/discussion sections
+- `Accordion` – FAQ, expandable lesson groups
+- `Tooltip` – hover help, icon descriptions
+- `Avatar` – user images (profile, replies)
+-----
+## ✅ Learning Components (Custom)
+- `QuestionBlock` – MCQ and test renderer
+- `LessonQuizBox` – embedded quiz in lessons
+- `ExplanationBlock` – text + video + "Show similar questions"
+- `Flashcard` – (optional) for gamified revision
+- `DiscussionThread` – reply thread + reactions + sort
+-----
+## 🛠 Built With
+- Based on: **shadcn/ui**, **Tailwind**, **Radix UI Primitives**
+- Fully themable with support for `dark` mode and `disabled` state
+- Keyboard accessible, ARIA-compliant by default
+-----
+# 🎨 Phase 4.2: Style Guide
+> Design tokens and UI language for the Edumynt platform. Compatible with Tailwind CSS, dark mode, and accessible UI principles.
+
+-----
+## 🟦 Color Palette
+### 🎯 Primary Colors
+- `primary`: `#2563eb` (blue-600) – main brand/action color
+- `primary-foreground`: `#ffffff`
+### ⚫ Neutral Grays
+- `background`: `#f9fafb` (light) / `#0f172a` (dark)
+- `foreground`: `#1e293b` (text)
+- `muted`: `#e2e8f0` (gray-200)
+- `border`: `#d1d5db` (gray-300)
+### ✅ State Colors
+- `success`: `#22c55e` (green-500)
+- `danger`: `#ef4444` (red-500)
+- `warning`: `#f59e0b` (amber-500)
+- `info`: `#3b82f6` (blue-500)
+-----
+## 🅰️ Typography
+### 🔠 Font Stack
+- Heading & Body: `Inter, sans-serif`
+- Monospace: `JetBrains Mono, monospace` (for AI/code/debug)
+### 📏 Font Sizes (Tailwind Scale)
+- `text-sm`: 14px
+- `text-base`: 16px (default)
+- `text-lg`: 18px
+- `text-xl`: 20px+
+- `text-2xl` → `text-4xl`: For large headlines
+### ✨ Styles
+- Headings: `font-semibold`, tracking-tight
+- Body: `leading-relaxed`
+- Emphasis: use `text-muted-foreground` for de-emphasis
+-----
+## 📦 Spacing & Layout
+### 🌐 Grid System
+- Content max-width: `1280px` (`max-w-7xl`)
+- Sidebar width: `280px` (`w-72`)
+- Gutter/padding: `p-4`, `p-6`
+### 📏 Spacing Scale
+- `gap-2` → tight inline spacing
+- `gap-4`, `gap-6` → sections, card spacing
+- `space-y-4` → vertical stacking
+-----
+## 🌓 Light/Dark Theme
+- Fully supports `dark:` variants via Tailwind
+- Auto-toggle or user-set in settings
+- Color tokens remain consistent via `:root` custom properties
+-----
+## 🎯 Elevation
+- Cards: `shadow-md`, `rounded-xl`
+- Modals/popovers: `shadow-lg`, `z-[999]`
+- Click states: subtle scale and ring
+-----
+## 🧩 Component Variants
+- Buttons:
+  - `variant="default"`, `outline`, `ghost`, `destructive`
+  - Sizes: `sm`, `md`, `lg`, `icon`
+- Inputs:
+  - Error state: `border-red-500`, `aria-invalid`
+  - Disabled: `opacity-50`, `cursor-not-allowed`
+- Alerts:
+  - Icons + contextual color (info, warning, error, success)
+- Cards:
+  - `default`, `elevated`, `flat`
+-----
+## 🔠 Iconography
+- Icon pack: `lucide-react` or `phosphor-icons`
+- Sizes: 16px → 24px
+- Line icons preferred (filled only in emphasis)
+-----
+## ✅ Accessibility (a11y)
+- All buttons, inputs, popovers keyboard-navigable
+- Use of `aria-*` props in forms, modals, tabs
+- Color contrast meets WCAG AA+ for text/background
+-----
+## 🛠 Tooling Notes
+- Tailwind config uses `extend.theme` for brand tokens
+- Supports `@apply` for reusable utility classes
+- Works with shadcn/ui themes via `tailwind.config.ts`
+-----
+This roadmap guides you through every phase of planning a web application — from scratch to final product. It focuses entirely on **planning**, not implementation.
+
+-----
+## 🧠 [[Phase 1 Vision and Discovery]]
+> “What am I building and why?”
+### 🔹 1. Problem Definition
+- What problem are you solving?
+- Who are the users?
+- What makes this different/better?
+### 🔹 2. Goal Statement
+- 1-line elevator pitch
+- Business goals (e.g., passive income, demo, MVP)
+- Success criteria
+### 🔹 3. User Personas
+- Define key ==user== roles (e.g., student, admin, guest)
+- Goals, pain points, devices used, habits
+### 🔹 4. Feature Wishlist (Unfiltered)
+- Brainstorm all potential features
+- Tag as must-have / nice-to-have / stretch goal
+-----
+## 📐 PHASE 2: STRUCTURE & FLOW
+> “How does the app work?”
+### 🔹 5. App Architecture Overview
+- Frontend: SPA, SSR/CSR?
+- Backend: Supabase, Node, Django, etc.
+- Auth, storage, notifications, integrations
+### 🔹 6. User Flow Maps
+- Flowcharts for key actions (signup, enroll, learn)
+- Tools: Mermaid, Miro
+### 🔹 7. Screen Inventory
+- List every screen/page (login, dashboard, course)
+- Create a `.md` file per screen
+### 🔹 8. Screen-Level Planning
+For each screen:
+
+- Purpose
+- Target user
+- Components/UI (cards, forms, etc.)
+- State handling (loading, error, empty)
+- Permissions & logic
+- Navigation in/out
+-----
+## 🗂 PHASE 3: DATA & SYSTEM DESIGN
+> “How will data and backend work?”
+### 🔹 9. Database Schema Design
+- Tables + fields
+- Relationships
+- Access control rules
+### 🔹 10. APIs / Services
+- What API endpoints are needed?
+- Realtime? File uploads? Stripe?
+### 🔹 11. User Roles & Permissions
+- Role-Based Access Control
+- Supabase RLS if used
+-----
+## 🎨 PHASE 4: UI/UX DESIGN PLANNING
+> “What will it look and feel like?”
+### 🔹 12. Component Inventory
+- Buttons, cards, inputs, layouts
+- Prefer reusable design system (e.g., shadcn/ui)
+### 🔹 13. Wireframes / Mockups
+- Low → high fidelity (Figma, Pen, v0.dev)
+### 🔹 14. Style Guide
+- Colors, fonts, spacing
+- Light/dark mode
+- Component variants
+-----
+## 🧪 PHASE 5: VALIDATION & PREP
+> “Is this plan sound and future-proof?”
+### 🔹 15. Technical Feasibility Checks
+- Can everything be built with your stack?
+- Any external service limitations?
+### 🔹 16. Prioritization & MVP Definition
+- Must-have vs later features
+### 🔹 17. Roadmap Planning
+- Timeline per screen/module
+### 🔹 18. Dev Environment & Tooling Plan
+- Tech stack: Next.js, Tailwind, Supabase, etc.
+- Linting, testing, CI/CD
+- Deployment (Vercel, Docker, etc.)
+-----
+## 🧾 PHASE 6: DOCUMENT EVERYTHING
+> “Make it repeatable and scalable.”
+
+- `README.md`: Project overview
+- `docs/architecture.md`: Tech decisions
+- `docs/api.md`: Backend endpoints
+- `docs/ui-components.md`: Design system
+- `docs/screen-plans/*.md`: Individual screens
+-----
+## ✍️ Screen Note Template Example (`/notes/screens/login.md`)
+~~~ markdown
+# Screen: Login
+
+## Purpose
+Allow users to authenticate using email/password or OTP.
+
+## Components
+- Email Input
+- Password Input
+- Submit Button
+- Error Message
+- Forgot Password Link
+
+## States
+- Idle
+- Submitting
+- Error (invalid credentials)
+
+## Logic
+- Validate fields
+- Call `/login` API
+- Handle JWT/session
+~~~
+# 🗂️ Master Screen Index
+A complete list of all screens in the Edumynt web app, grouped by functionality. Click any link to view its spec.
+
+-----
+## 🎓 Learning & Course Flow
+- [[Home Page]]
+- [[All Courses Page]]
+- [[Course Dashboard]]
+- [[Lesson Page Video Text]]
+- [[Inter-Lesson Quiz Page]]
+- [[Test Page (Mock Practice)]]
+- [[Test Result Page]]
+- [[Test Leaderboard Page]]
+- [[Test Explanation Screen]]
+-----
+## 📚 Notes & Reading Tools
+- [[Notes Library Page]]
+- [[Single Note View]]
+- [[Ebook Reader View]]
+-----
+## 💬 Community & Interaction
+- [[Discussion Thread Page]]
+- [[Community Links Page]]
+- [[User Notifications Page]]
+-----
+## 🤖 AI Assistant Interfaces
+- [[AI Ask Page]]
+- [[AI Test Coach Page]]
+- [[AI Lesson Helper Sidebar]]
+-----
+## 👤 User Account & Learning Progress
+- [[User Dashboard Profile Page]]
+- [[Bookmark Screen]]
+- [[Revision Planner Screen]]
+- [[Daily Practice Screen]]
+- [[Streaks and Leaderboard]]
+- [[Purchase History Screens]]
+-----
+## 🧑‍💼 Admin & Content Management
+- [[Admin Dashboard]]
+- [[Course Manager Page]]
+- [[Lesson Editor Page]]
+- [[Question Manager Page]]
+- [[Media Upload Manager Page]]
+- [[Admin Analytics Page]]
+-----
+## ⚙️ System & Utility Pages
+- [[Contact Us]]
+- [[Privacy Policy Page]]
+- [[404 Not Found Page]]
+-----
+## 🔐 Auth & Access (Handled Globally)
+- Login Screen
+- Signup Screen
+- Password Reset
+- Email Verification
+- Error Screens (403, 500 fallback)
+-----
+## 🧭 Navigation Notes
+- Every screen connects through sidebar, top nav, or deep links
+- Screens are **mobile-first**, with fullscreen modals or drawers where needed
+- AI, Community, and Notes features are tightly embedded into lessons and tests
+-----
+✅ Total Screens Defined: **40+**
+
+Need a visual sitemap or a clickable navigation flow diagram next?
+## 🧭 Purpose
+Allow users to log in using email and password. Provide a smooth, distraction-free entry point into the learning platform. Supports redirect for already logged-in users.
+
+-----
+## 👤 Target User
+- Students with accounts
+- Admin/team members
+- Preview users (optional upgrade to account)
+-----
+## 🧱 Components / UI Elements
+- Email input field
+- Password input field
+- Login/Submit button
+- “Forgot password?” link → `/reset-password`
+- Link to [[Signup Screen]]
+- Branding/logo (Edumynt)
+- Optional: “Continue as Guest” or "Explore without Login" (for preview lessons only)
+-----
+## 🔁 States
+- **Idle**: Default input form
+- **Submitting**: Spinner / loading button
+- **Success**: Redirect to `/dashboard`
+- **Error**: Display error message (invalid credentials, server error)
+-----
+## 🔐 Access Control
+- This screen is **only visible** to users who are not authenticated
+- If user is already logged in → auto-redirect to `/dashboard`
+-----
+## 🔗 Navigation
+- **In**:
+  - From homepage CTA
+  - From preview lesson modal
+  - From “Sign Up” redirect
+- **Out**:
+  - Successful login → `/dashboard`
+  - “Forgot password?” → `/reset-password`
+  - “Sign up” → `/signup`
+-----
+## 🧠 Notes
+- Keep UI minimal and fast
+- Avoid full-page reloads (SPA behavior)
+- Use Supabase Auth for login logic (with client-side feedback)
+## 🧭 Purpose
+Allow users to initiate a secure password reset using their registered email. This improves account recovery and trust without admin involvement.
+
+-----
+## 👤 Target User
+- Registered users who forgot their password
+- Students attempting login but fail repeatedly
+- Admin/team members with email-based accounts
+-----
+## 🧱 Components / UI Elements
+- Email input field
+- Submit button: “Send Reset Link”
+- Success message: “Check your inbox for a password reset link.”
+- Link to [[Login Screen]]
+- Branding/logo (Edumynt)
+-----
+## 🔁 States
+- **Idle**: Input field visible
+- **Submitting**: Button disabled + loading spinner
+- **Success**: Confirmation message shown
+- **Error**: Email not found, too many attempts, server error
+-----
+## 🔐 Access Control
+- Accessible to all non-authenticated users
+- Logged-in users should not see this screen (redirect to `/dashboard`)
+-----
+## 🔗 Navigation
+- **In**:
+  - From Login screen → “Forgot Password?”
+- **Out**:
+  - User clicks reset email link → taken to secure Supabase reset flow
+  - After reset, return to [[Login Screen]]
+-----
+## ✅ Additional Notes
+- Uses `supabase.auth.resetPasswordForEmail()` on frontend
+- Supabase handles secure reset flow via email link → custom redirect URL
+- Must configure redirect URL in Supabase Auth settings (e.g. `/auth/reset-confirm`)
+## 🧭 Purpose
+Automatically redirect users based on authentication state and email verification. This acts as a global gatekeeper for protected routes and avoids repetition in page logic.
+
+-----
+## 👤 Target Context
+- Applied across all routes (or specific folders) in a Next.js App Router project
+- Ensures:
+  - Authenticated users access protected routes
+  - Unauthenticated users get redirected appropriately
+  - Verified emails are required for course access
+-----
+## 🧱 Components / Logic
+- Read Supabase session cookie (or token from localStorage/session)
+- Check:
+  - `user?.id`
+  - `user.email_confirmed`
+- Handle:
+  - Auto-redirect logged-in users from `/login`, `/signup` → `/dashboard`
+  - Block access to `/course/*`, `/lesson/*` if not logged in
+  - Allow `/lesson/*/preview` without auth
+- Optional: add header info for SSR-aware routing
+-----
+## 🔁 States
+- **Valid session + verified** → proceed to requested route
+- **Valid session + unverified** → redirect to [[Verify Email Screen]]
+- **No session** → redirect to [[Login Screen]] (or allow preview-only pages)
+- **Error / token expired** → clear session, redirect
+-----
+## 🧰 Implementation (Next.js App Router example)
+Use [`middleware.ts`] at the root:
+~~~ ts
+import { NextResponse } from 'next/server'
+import type { NextRequest } from 'next/server'
+
+export function middleware(req: NextRequest) {
+  const url = req.nextUrl.clone()
+  const token = req.cookies.get('sb-access-token')?.value
+
+  const isProtected = url.pathname.startsWith('/dashboard') || url.pathname.startsWith('/course')
+  const isPublic = url.pathname.startsWith('/lesson') && url.pathname.includes('preview')
+
+  if (!token && isProtected && !isPublic) {
+    url.pathname = '/login'
+    return NextResponse.redirect(url)
+  }
+
+  return NextResponse.next()
+}
+
+'''
+~~~
+# 🔐 Screen: Signup Screen
+## 🧭 Purpose
+Allow new users to create an account using email and password. Ensure a fast, simple, non-distracting experience that encourages signup. Optionally link to guest preview mode.
+
+-----
+## 👤 Target User
+- Students signing up for the first time
+- Returning users redirected from preview lessons
+- Optional: Admins/team members (via invite flow or backend)
+-----
+## 🧱 Components / UI Elements
+- Full name (optional)
+- Email input
+- Password input (min length validation)
+- Confirm password (optional)
+- Submit / “Create Account” button
+- Terms and Privacy policy acceptance
+- Link to [[Login Screen]]
+- Post-submit message: “Check your email to verify your account”
+- Branding/logo (Edumynt)
+-----
+## 🔁 States
+- **Idle**: Form shown
+- **Submitting**: Button disabled + loading spinner
+- **Success**: Show confirmation → redirect to `/verify-email`
+- **Error**: Show validation or Supabase error (email already exists, etc.)
+-----
+## 🔐 Access Control
+- Only visible to non-authenticated users
+- Auto-redirect logged-in users to `/dashboard`
+-----
+## 🔗 Navigation
+- **In**:
+  - From homepage
+  - From Login screen
+  - From preview lessons (if “Continue Learning” prompt shown)
+- **Out**:
+  - Success → `/verify-email`
+  - “Already have an account?” → [[Login Screen]]
+-----
+## ✅ Additional Notes
+- Use Supabase Auth’s `signUp()` function
+- Optionally pre-fill email if user came from preview session
+- Email verification must be enabled before allowing access to protected lessons/tests
+- Include hidden honeypot field for spam/bot protection (basic anti-bot)
+# 🔐 Screen: Verify Email Screen
+## 🧭 Purpose
+Instruct users to check their inbox and verify their email before continuing. This adds a layer of trust, prevents fake accounts, and aligns with Supabase's verification workflow.
+
+-----
+## 👤 Target User
+- Students who just signed up
+- Anyone trying to log in without verified email (blocked from dashboard access)
+-----
+## 🧱 Components / UI Elements
+- Confirmation icon or animation (e.g. envelope sent ✅)
+- Message:
+  - “We've sent a verification link to your email.”
+  - “Please check your inbox (and spam folder) to complete your registration.”
+- Resend verification email button
+- Link to [[Login Screen]]
+- Branding/logo
+-----
+## 🔁 States
+- **Idle**: Message visible, resend enabled
+- **Resending**: Loading spinner or disabled button
+- **Success (Resend)**: Confirmation message: “Email sent again.”
+- **Error**: Show resend failure reason (e.g., too frequent requests)
+-----
+## 🔐 Access Control
+- Accessed after signup
+- Can also be shown on redirect if user is logged in but `email_confirmed = false`
+- Authenticated, verified users get redirected to `/dashboard`
+-----
+## 🔗 Navigation
+- **In**:
+  - After successful signup
+  - From login flow if `user.email_confirmed = false`
+- **Out**:
+  - After verifying email via inbox → app auto-redirects to `/dashboard`
+  - Manually click → [[Login Screen]]
+-----
+## ✅ Additional Notes
+- Supabase automatically sends the email if configured
+- Polling or manual refresh logic can check verification status every few seconds
+- Useful to include support link: “Didn’t receive an email?”
+# 📊 Screen: Admin Analytics Page
+## 🧭 Purpose
+Give admins access to key platform usage insights — including user activity, lesson/test engagement, course completion trends, and content performance.
+
+-----
+## 👤 Target User
+- ✅ Admins only
+- Optional: analytics-only role (read-only)
+-----
+## 🧱 UI Layout & Components
+### 📈 Summary Cards (Top Metrics)
+- 👥 Total Users
+- 🟢 Active Users (last 24h / 7d)
+- 🎓 Courses Completed
+- 📘 Lessons Viewed Today
+- 🧪 Tests Taken
+- 🧠 AI Queries Used
+-----
+### 📊 Charts & Graphs
+#### 🗓️ User Activity Over Time
+- Line graph: daily/weekly/monthly active users
+- Filters: time range, subject
+#### 📚 Course Engagement
+- Bar chart: Most-viewed courses
+- Funnel view: Enrolled → Started → Completed
+#### 📄 Lesson Analytics
+- Heatmap of lesson views by day/time
+- Drop-off tracking: where users exit the lesson
+#### 🧪 Test Analytics
+- Score distribution graph
+- Completion vs abandonment
+- Average accuracy per test/topic
+#### 📈 Growth
+- New users per day
+- Revenue (if monetized)
+- Popular devices/platforms (mobile vs desktop)
+-----
+## 📥 Export & Reports
+- “Download as CSV / PDF”
+- Schedule weekly/monthly report to email
+-----
+## 🔁 States
+- Empty → “Not enough data yet.”
+- Loading → per widget
+-----
+## 🔐 Access Control
+- Admins only
+- Scoped via Supabase RLS or server-based check
+-----
+## 🔗 Navigation
+- **In**: From [[Admin Dashboard]]
+- **Out**: Drill down to [[Course Manager Page]], [[Test Result Page]] (aggregate), or [[User Dashboard]]
+-----
+## 🎨 UX Notes
+- Charts are interactive
+- Responsive and mobile-friendly layout
+- Sections collapsible for quick scanning
+-----
+## 🧠 UX Psychology Principles
+- Immediate visual insights reduce decision fatigue
+- Trends over time encourage goal setting
+- Completion funnels help prioritize stuck points in content
+# 🧑‍💼 Screen: Admin Dashboard
+## 🧭 Purpose
+Give admins a central control panel to manage all educational content, monitor platform activity, and access creation/edit tools quickly.
+
+-----
+## 👤 Target User
+- 🔐 Platform admins
+- 🧑‍🏫 Content creators (optional roles with scoped access)
+-----
+## 🧱 UI Layout & Components
+### 🔝 Top Bar
+- Logo + dashboard name
+- Quick access icons:
+  - 🔍 Global search
+  - 🛠️ Site settings
+  - 📤 Log out
+### 🧩 Dashboard Widgets
+#### 📈 Site Overview
+- Active users today
+- New signups
+- Course completions
+- Test attempts today
+#### 🧑‍🏫 Content Overview
+- Total Courses
+- Total Lessons
+- Total Notes
+- Tests created
+#### 🛠️ Quick Actions
+- ➕ Create New Course
+- ➕ Add New Lesson
+- ➕ Add New Test
+- 📤 Upload Media
+#### 📬 Notifications / Reports
+- Content flagged for review
+- Low-rated lessons or explanations
+- AI feedback issues
+-----
+## 🔁 States
+- Empty states for new platform → “No data yet, start creating”
+- Widget loading spinners
+-----
+## 🔐 Access Control
+- Role-based access
+- Full access: admins
+- Limited access: instructors/content creators (based on course ownership)
+-----
+## 🔗 Navigation
+- **Out**:
+  - [[Course Manager Page]]
+  - [[Lesson Editor Page]]
+  - [[Question Manager Page]]
+  - [[Media Upload Manager Page]]
+  - [[Admin Analytics Page]]
+-----
+## 🎨 UX Notes
+- Modular layout, cards/widgets
+- Drag-and-drop customizable layout (optional)
+- Responsive for tablet view
+-----
+## 🧠 UX Psychology Principles
+- Action-first layout = encourages creation
+- At-a-glance analytics for fast platform health checks
+# 📚 Screen: Course Manager Page
+## 🧭 Purpose
+Allow admins and course creators to create, edit, manage, and organize all courses from a single interface. Includes course-level controls for structure, access, pricing, and visibility.
+
+-----
+## 👤 Target User
+- ✅ Admins (full access)
+- 🧑‍🏫 Content authors (scoped to their courses)
+-----
+## 🧱 UI Layout & Components
+### 🔝 Top Bar
+- “Courses” title
+- 🔍 Search bar
+- Filters: Status (Published, Draft, Hidden), Subject, Creator
+- ➕ New Course button
+-----
+### 📄 Course List Section
+- Table/grid view:
+  - 📘 Course Title
+  - 👤 Author
+  - 📅 Created / Updated
+  - 🔄 Progress (e.g. lessons/tests added)
+  - ⚙️ Actions:
+    - Edit → [[Lesson Editor Page]]
+    - Publish / Unpublish
+    - Delete
+    - View as student
+-----
+### ➕ Create/Edit Course Modal/Page
+- Fields:
+  - Course Title
+  - Description (supports rich text)
+  - Subject tag(s)
+  - Thumbnail upload
+  - Pricing:
+    - Free / Paid
+    - Price input (₹)
+  - Preview lessons toggle
+  - Course visibility (Published / Draft / Hidden)
+  - Attach notes/test groups
+- Submit = creates course shell → redirects to [[Lesson Editor Page]]
+-----
+## 🔁 States
+- No courses: “No courses created yet.”
+- Empty filters: “No matching courses found.”
+-----
+## 🔐 Access Control
+- Admins: full access
+- Authors: can edit only their own courses
+- Access scoped by Supabase RLS or custom logic
+-----
+## 🔗 Navigation
+- **In**: From [[Admin Dashboard]]
+- **Out**:
+  - Edit → [[Lesson Editor Page]]
+  - Attach tests → [[Question Manager Page]]
+  - View course → [[Course Dashboard]]
+-----
+## 🎨 UX Notes
+- Responsive table layout
+- Sticky “New Course” button
+- Clean action buttons (edit, publish, etc.)
+-----
+## 🧠 UX Psychology Principles
+- At-a-glance clarity → encourages content ownership
+- Minimal friction to start new course
+- Visual indicators of progress prevent half-published courses
+# 📝 Screen: Lesson Editor Page
+## 🧭 Purpose
+Allow admins and course authors to create and edit individual lessons — including video/text content, quiz embedding, notes attachment, and preview control.
+
+-----
+## 👤 Target User
+- ✅ Admins (full control)
+- 🧑‍🏫 Course authors (access limited to their own lessons)
+-----
+## 🧱 UI Layout & Components
+### 🔝 Top Section
+- Breadcrumb: Dashboard → Course → Lesson
+- Current lesson title (editable)
+- Save, Preview, Publish buttons
+- Toggle: Draft / Published
+- Toggle: Is Preview Lesson (✅ anyone can access)
+-----
+### 🧩 Main Editor Tabs
+#### 1\. 📄 **Lesson Content**
+- Text Editor:
+  - Markdown WYSIWYG
+  - Image/diagram embed
+  - Callouts, tips, quiz prompts
+- Video:
+  - Upload/Embed (from [[Media Upload Manager Page]])
+  - Optional: audio track / captions
+  - Time-stamped questions (optional)
+#### 2\. 🧪 **Lesson Quiz**
+- Add inline or standalone quiz
+- Types: MCQ, fill-in-the-blank, match, drag-drop
+- Immediate feedback toggle
+#### 3\. 📘 **Attach Notes**
+- Attach from [[Notes Library Page]]
+- Upload new note (PDF or Markdown)
+#### 4\. 🔗 **Metadata & Linking**
+- Tags (Grammar, Vocab, etc.)
+- Related lessons
+- Prerequisites
+- Estimated time
+-----
+## 🛠️ Editor Actions
+- ✅ Save as Draft
+- 👁️ Preview as student
+- 🚀 Publish immediately
+- ⛔ Delete Lesson
+-----
+## 🔁 States
+- Unsaved changes warning
+- Missing required fields → disable publish
+- Auto-save (optional toggle)
+-----
+## 🔐 Access Control
+- Admins: all courses
+- Authors: scoped to their own courses via RLS
+-----
+## 🔗 Navigation
+- **In**: From [[Course Manager Page]]
+- **Out**:
+  - View → [[Lesson Page (Video/Text)]]
+  - Add Quiz → [[Question Manager Page]]
+  - Media picker → [[Media Upload Manager Page]]
+-----
+## 🎨 UX Notes
+- Tabs keep editing clean and non-cluttered
+- Autosave icon animation (🌀)
+- Rich media preview inline
+-----
+## 🧠 UX Psychology Principles
+- Tabbed flow reduces cognitive overload
+- Save + Preview loop reinforces confidence before publishing
+- Markdown + multimedia = maximized learning flexibility
+# 🖼️ Screen: Media Upload/Manager Page
+## 🧭 Purpose
+Allow admins and content authors to upload, organize, and manage all course-related media assets including videos, images, audio, and PDFs — with tagging and usage context.
+
+-----
+## 👤 Target User
+- ✅ Admins
+- 🧑‍🏫 Content creators (scoped access based on course ownership)
+-----
+## 🧱 UI Layout & Components
+### 🔝 Top Bar
+- “Media Library” title
+- Search input: filename, tag, type
+- Filters:
+  - Type (Video, Image, Audio, PDF)
+  - Linked to: Course / Lesson / Notes
+- Upload button: ➕ Upload Media
+-----
+### 📁 Media Grid/List
+Each media file card shows:
+
+- 🖼️ Thumbnail or file icon
+- Filename
+- Type icon (🎥, 🖼️, 🔊, 📄)
+- Linked usage (e.g., “Used in Lesson: Noun Basics”)
+- Actions:
+  - 🔗 Copy file URL
+  - ✏️ Edit metadata
+  - ❌ Delete
+-----
+### ➕ Upload Modal
+- Drag-and-drop or browse files
+- Auto-categorization by MIME type
+- Optional:
+  - Title
+  - Description
+  - Tags
+  - Link immediately to course/lesson
+-----
+## 🔁 States
+- Empty state: “No media files uploaded yet.”
+- Loading / progress indicators during uploads
+- Delete confirmation
+-----
+## 🔐 Access Control
+- Admins: full access
+- Authors: only see/upload media related to their content
+-----
+## 🔗 Navigation
+- **In**: From [[Lesson Editor Page]], [[Question Manager Page]]
+- **Out**:
+  - To media preview
+  - To content editors (link button injects file URL)
+-----
+## 🎨 UX Notes
+- Responsive grid layout
+- Icons adapt to file type
+- Drag-to-reorder (for ordered galleries)
+-----
+## 🧠 UX Psychology Principles
+- Clear reuse paths prevent reupload
+- Linking media directly from here → faster publishing workflow
+- Consistent thumbnails build visual memory for content creators
+# ❓ Screen: Question Manager Page
+## 🧭 Purpose
+Allow admins and course authors to create, edit, tag, and organize questions across lessons, quizzes, and full-length tests. Questions can be reused across lessons/tests or grouped by concept.
+
+-----
+## 👤 Target User
+- ✅ Admins (access to all questions)
+- 🧑‍🏫 Course authors (access scoped to their content)
+-----
+## 🧱 UI Layout & Components
+### 🔝 Top Bar
+- “Questions” title
+- 🔍 Search bar (question text, tags, difficulty)
+- Filters:
+  - Subject, Topic, Question Type, Used In (Lesson/Test)
+  - Difficulty: Easy, Medium, Hard
+- ➕ Add Question button
+-----
+### 📄 Question List View
+
+|ID|Question Preview|Type|Used In|Tags|Last Edited|Actions|
+| :-: | :-: | :-: | :-: | :-: | :-: | :-: |
+
+- Action buttons:
+  - ✏️ Edit → opens editor modal
+  - 📎 Link to lesson/test
+  - ❌ Delete
+-----
+### ➕ Question Editor (Modal/Page)
+- Fields:
+  - Question Text (Rich or Markdown)
+  - Type: MCQ / Multi-select / Fill-in-the-blank / Match / Drag-drop
+  - Options (if applicable)
+  - Correct answer(s)
+  - Explanation (text + optional video)
+  - Tags / Topics
+  - Difficulty level
+  - Attach to lesson or test
+- Save / Preview buttons
+- Link this question to:
+  - Specific lesson
+  - Specific test
+  - Similar questions set
+-----
+## 🔁 States
+- Empty state: “No questions yet. Start creating.”
+- Edit mode with validation errors
+- Success toast on save/delete
+-----
+## 🔐 Access Control
+- Admin: full
+- Authors: scoped by ownership or course assignment (Supabase RLS)
+-----
+## 🔗 Navigation
+- **In**:
+  - From [[Lesson Editor Page]]
+  - From [[Test Page (Mock/Practice)]] builder
+- **Out**:
+  - To lesson/test preview
+  - To explanation screen
+  - Back to dashboard
+-----
+## 🎨 UX Notes
+- Rich preview of MCQ and answers
+- Icons for difficulty, usage, flagged status
+- Fast editing workflow (no page reloads)
+-----
+## 🧠 UX Psychology Principles
+- Question tagging helps AI feedback and recommendation
+- Reusable content avoids duplicate effort
+- Structured metadata aids in smart revision & analytics
+# 🤖 Screen: AI Ask Page
+## 🧭 Purpose
+A general-purpose chat interface where users can ask the AI assistant academic questions, request explanations, or generate examples across all subjects.
+
+-----
+## 👤 Target User
+- ✅ Logged-in students
+- 🧑‍🏫 Admins (can view AI usage logs)
+- 🚫 Guests: cannot access
+-----
+## 🧱 UI Layout & Components
+- 🧠 Main Chat Area:
+  - Chat bubbles (user vs AI)
+  - Markdown + math support
+  - Links to lessons/tests (auto-generated)
+- 💬 Input Box:
+  - Multiline text input
+  - “Send” button
+  - Button to attach context (lesson/test)
+- 🧾 Sidebar (optional):
+  - “Recent Questions”
+  - “Saved/Starred Answers”
+  - “Subjects” quick filter
+-----
+## 🔁 States
+- No input → prompt: “Ask me anything about English or Psychology.”
+- Loading spinner on AI response
+- Error fallback: “AI failed to respond. Try again.”
+-----
+## 🔐 Access Control
+- Only available to logged-in users
+- Rate limited per user (optional)
+- Based on API key (frontend or server proxy)
+-----
+## 🔗 Navigation
+- From dashboard, lesson, footer nav
+- Related links from: test result, notes, bookmarks
+-----
+## 🎨 UX Notes
+- Animated typing dots
+- Highlighted math/code blocks
+- Light/dark compatible
+-----
+## 🧠 UX Psychology
+- Open prompt format encourages curiosity
+- History sidebar builds user trust over time
+# 🎓 Component: AI Lesson Helper Sidebar
+## 🧭 Purpose
+Live AI assistant for any lesson — embedded as a right-side expandable sidebar. Answers lesson-related questions in real-time with deep context.
+
+-----
+## 👤 Target User
+- ✅ Enrolled students
+- 🚫 Guests: disabled or restricted preview
+-----
+## 🧱 UI Layout & Components
+- Trigger: “Ask AI” floating button (bottom-right or lesson toolbar)
+- Sidebar content:
+  - Pre-filled prompt: “What’s your doubt about [Lesson Name]?”
+  - AI reply chat box
+  - Suggested actions:
+    - “Explain again”
+    - “Give me a question on this”
+    - “Summarize this lesson”
+    - “Link to similar topics”
+-----
+## 🔁 States
+- Minimized → just the Ask AI button
+- Active → collapsible sidebar with chat log
+- Loading/Typing → animated reply dots
+-----
+## 🔐 Access Control
+- Only in unlocked or previewable lessons
+- Can throttle access via API call count/user
+-----
+## 🔗 Navigation
+- Only appears inside [[Lesson Page (Video/Text)]]
+- Uses current lesson context + scroll section
+-----
+## 🎨 UX Notes
+- Non-blocking sidebar
+- Mobile: opens as full screen modal
+- Text copy + response bookmark support
+-----
+## 🧠 UX Psychology
+- Instant assistance = higher lesson completion
+- Reduces dropout from confusion
+- Encourages repeated AI use by making it contextual
+# 📊 Screen: AI Test Coach Page
+## 🧭 Purpose
+Analyze a user’s test performance and generate personalized feedback, weak topic insights, and next-step recommendations using AI.
+
+-----
+## 👤 Target User
+- ✅ Enrolled users with completed test attempts
+-----
+## 🧱 UI Layout & Components
+- Test Selection Dropdown
+- AI Summary Section:
+  - “You scored better than 78% of users”
+  - “Your weakest topics: Verb Agreement, Logical Ordering”
+- Suggested Next Steps:
+  - 🔁 Retake X questions
+  - 📘 Revise lesson: [Lesson Name]
+  - 🧠 Practice Y topic test
+### Optional:
+- Ask follow-up → text box
+- “Summarize test in one paragraph”
+- “Turn mistakes into flashcards”
+-----
+## 🔁 States
+- No test selected → prompt to choose
+- AI still loading → spinner + placeholder cards
+-----
+## 🔐 Access Control
+- Only accessible to users with completed test attempts
+-----
+## 🔗 Navigation
+- From [[Test Result Page]]
+- From Profile → Test History
+-----
+## 🎨 UX Notes
+- Sectioned layout:
+  - Summary
+  - Feedback list
+  - Actions
+- Card-based results for visual scanning
+-----
+## 🧠 UX Psychology
+- Actionable feedback drives engagement
+- “Do this next” prevents dropout post-test
+# 🌐 Screen:  (Telegram/Discord)
+## 🧭 Purpose
+Give students access to official external community channels for casual chat, audio events, and peer interaction — without rebuilding social infra.
+
+-----
+## 👤 Target User
+- All users (logged in or guest)
+-----
+## 🧱 UI Layout & Components
+- Intro section: “Join the Edumynt student community!”
+- Cards for each platform:
+  - 📢 Telegram
+    - Group invite link
+    - What it's for (announcements, voice chat, etc.)
+    - QR code
+  - 💬 Discord
+    - Server invite link
+    - Channels overview
+    - QR + join button
+- FAQ/Support: “What to do if link expires?”
+-----
+## 🔁 States
+- None (static content unless dynamic invites break)
+-----
+## 🔗 Navigation
+- From footer, dashboard, discussion CTAs
+-----
+## 🎨 UX Notes
+- No chat embedded — external only
+- Icons, brief descriptions
+- Focus on onboarding ease
+-----
+## 🧠 UX Notes
+- Keeping social chat off-site helps reduce distraction + moderation burden
+# 💬 Screen: Discussion Thread Page
+## 🧭 Purpose
+Allow users to ask questions, discuss doubts, or share insights on a specific lesson, quiz, or topic. Fully contextual discussions integrated within the learning flow.
+
+-----
+## 👤 Target User
+- ✅ Enrolled users
+- 👀 Preview/guest users: view-only mode (optional)
+- 🧑‍🏫 Admins/moderators: pin, delete, reply as verified
+-----
+## 🧱 UI Layout & Components
+### 🔝 Top Area
+- Title: “Discussion on: [Lesson Title / Test / Topic]”
+- Breadcrumb nav: Home → Course → Lesson → Discussion
+- Back button
+### 🗣️ Main Thread
+- Question/Prompt at top
+  - Rich text support (bold, code, link)
+  - Timestamp, tags
+- Replies:
+  - Chronological or upvoted sorting
+  - Avatar, username (clickable), reply badge
+  - Markdown support + emojis
+- “Reply” text area (if logged in)
+- “Mark as resolved” (thread author/admins)
+### 🔧 Tools
+- “Follow this thread”
+- “Notify me on replies”
+- Report reply
+- Shareable public link (if thread is public)
+-----
+## 🔁 States
+- Empty thread: “Be the first to ask a question.”
+- Locked thread: “This discussion has been closed.”
+- Guest user: “Login to participate.”
+-----
+## 🔐 Access Control
+- View: all enrolled users
+- Post: only if enrolled
+- Guests: optional view-only (if public setting is on)
+-----
+## 🔗 Navigation
+- **In**: From lesson page, quiz, test explanation
+- **Out**: User profile (via avatar), course dashboard
+-----
+## 🎨 UX Notes
+- Reply box always accessible
+- Sticky “new replies” indicator
+- Compact layout for mobile-first discussions
+# 🔔 Screen: User Notifications Page
+## 🧭 Purpose
+Display all notifications related to a user's courses, replies, tests, assignments, reminders, or community activity in one place.
+
+-----
+## 👤 Target User
+- ✅ Logged-in users only
+-----
+## 🧱 UI Layout & Components
+- Tabs or Filters:
+  - All | Lessons | Replies | Tests | System
+- List of notifications:
+  - Message (e.g., “You’ve unlocked a new lesson”)
+  - Type icon (🔔, 💬, ✅)
+  - Timestamp
+  - Link to relevant screen (clickable)
+### Features
+- “Mark all as read”
+- Delete/clear all
+- Toggle push/email preferences (or link to settings)
+-----
+## 🔁 States
+- Empty: “No notifications yet.”
+- Loading
+-----
+## 🔐 Access Control
+- Authenticated users only
+-----
+## 🔗 Navigation
+- From top bar icon (bell)
+- From profile/settings
+-----
+## 🎨 UX Notes
+- Uses toast + drawer for real-time notifications
+- This page = archive/history view
+- Badge counters on tabs
+# 📚 Screen: All Courses Page
+## 🧭 Purpose
+Show all available courses (free, paid, enrolled, upcoming) in a clean, filterable interface. Acts as the catalog for students to browse, preview, or enroll.
+
+-----
+## 👤 Target User
+- Logged-in users (primary)
+- Anonymous users (if allowed limited preview view)
+- Admins (can view/manage unpublished/upcoming courses)
+-----
+## 🧱 UI Layout & Components
+### 🔝 Top Bar (Transparent)
+- 🍔 Menu | 📖 Filter Icon | 🔍 Search (Course title/tags)
+- Filters (as overlay or chips):
+  - Subject (English, Psychology, etc.)
+  - Status (All, Enrolled, Not Enrolled, Coming Soon)
+  - Tags: [Complete], [Mini], [Free], [Paid]
+### 🧾 Course Cards (Grid/List Layout)
+Each course card contains:
+
+- Course title
+- Subject icon or badge (e.g., 🇬🇧 English, 🧠 Psychology)
+- Progress bar (if enrolled)
+- CTA Button:
+  - “Continue” (if enrolled)
+  - “Preview” (if preview available)
+  - “Buy Now” or “Enroll Free”
+- Optional: visual tag (New, Updated, Bestseller)
+
+🧠 Tip: Use hover/focus animations for desktop, swipe gestures on mobile
+
+-----
+## 🧩 Optional Top Sections
+### 🔖 Featured Courses Carousel (Optional)
+- Rotating highlights (admin-controlled or smart-ranking)
+- Courses with most engagement or new releases
+-----
+## 🔁 States
+- Logged in → show progress, hide locked courses
+- Logged out → all “Enroll” buttons redirect to login/signup
+- Empty state → “No courses available right now” (for future subject expansion)
+-----
+## 🔐 Access Control
+- Public screen (but preview/enroll buttons can trigger login)
+- Courses can be:
+  - Public + Free
+  - Public + Paid
+  - Unlisted (admin-only or link-access)
+-----
+## 🔗 Navigation
+- **In**: From Home page, Bottom Nav: 📚 Courses
+- **Out**:
+  - “Enroll” or “Continue” → [[Course Dashboard (Enrolled)]]
+  - “Preview” → [[Preview Lesson Page (No Login)]]
+  - “Buy Now” → Payment screen or flow
+-----
+## 🎨 UX Notes
+- 🧱 Consistent grid spacing (2-column mobile, 3–4 desktop)
+- 📱 Native feel: bottom nav stays fixed, top bar icons
+- 🔄 Filter/search responds instantly (client-side filtering)
+- 🌀 CTA buttons animate lightly on tap
+- 🎯 No clutter: limit each card to essential info only
+-----
+## 🧠 UX Psychology Principles
+- Default sorting by relevance or recent activity → avoids choice fatigue
+- Progress bars act as subtle motivation
+- Icons for subject reduce cognitive load vs reading all text
+- Preview access reduces friction and builds trust
+- Use visual consistency to build scan-ability
+# 📈 Screen: Daily Practice Page
+## 🧭 Purpose
+Deliver a smart, daily set of questions based on user’s past activity and weak areas.
+
+-----
+## 🧱 Features
+- Daily set of 5–10 questions
+- Powered by AI/Test data
+- Auto-graded + explain
+- Streak tracking
+- “I want more” button for bonus set
+-----
+## 🔗 Navigation
+- Home, AI Test Coach, Dashboard
+-----
+## 🔐 Access
+- Logged-in users only
+# 📈 Screen: Daily Practice Page
+## 🧭 Purpose
+Deliver a smart, daily set of questions based on user’s past activity and weak areas.
+
+-----
+## 🧱 Features
+- Daily set of 5–10 questions
+- Powered by AI/Test data
+- Auto-graded + explain
+- Streak tracking
+- “I want more” button for bonus set
+-----
+## 🔗 Navigation
+- Home, AI Test Coach, Dashboard
+-----
+## 🔐 Access
+- Logged-in users only
+# 📘 Screen: Ebook Reader View
+## 🧭 Purpose
+Display complete, well-formatted course notes in a longform reader layout — optimized for printing, offline access, or continuous study.
+
+-----
+## 👤 Target User
+- ✅ Enrolled students
+- 🧑‍🏫 Admins (can manage sections)
+- 🚫 Not accessible to guests unless marked public
+-----
+## 🧱 UI Layout & Components
+- TOC sidebar (collapsible):
+  - Chapters/sections as anchors
+  - Bookmark indicators
+- Scrollable full-content pane:
+  - Rendered in readable typography
+  - Chapter titles, diagrams, formulas, examples
+  - Interspersed quiz callouts (optional)
+- “You are here” scroll marker
+-----
+## 📥 Reader Controls
+- Font size
+- Line height
+- Dark mode toggle
+- Download PDF
+- “Resume from last page”
+- Jump to lesson (where note was used)
+-----
+## 🔁 States
+- Missing content fallback
+- Progress saved per course
+-----
+## 🔐 Access Control
+- Bound to course enrollment
+- Preview ebook: view-only first 1–2 chapters
+-----
+## 🔗 Navigation
+- **In**:
+  - From Lesson sidebar → Notes tab
+  - From [[Course Dashboard]]
+  - From [[Notes Library Page]]
+- **Out**:
+  - Jump to lesson → [[Lesson Page]]
+  - Ask AI → [[AI Lesson Helper Sidebar]]
+-----
+## 🎨 UX Notes
+- No headers or navbars in reader mode
+- Page-break simulation for print preview
+- Text selection for highlight, copy, AI query
+-----
+## 🧠 UX Psychology Principles
+- Focused reading environment improves retention
+- Allowing printing/offline use increases flexibility
+- Interlinking lessons → notes → AI → revision = total learning loop
+# 🧪 Screen: Inter-Lesson Quiz Page
+## 🧭 Purpose
+Reinforce understanding of the previous lesson before moving to the next. Designed for short, concept-checking assessments with instant feedback and minimal distraction.
+
+-----
+## 👤 Target User
+- Enrolled students (primary)
+- Optional: guests, if quiz is attached to a preview lesson
+-----
+## 🧱 UI Layout & Components
+### 🔝 Top Bar
+- Back button (returns to previous lesson)
+- Lesson/Unit title (small text)
+- Settings (font, accessibility)
+### 🧩 Main Content Area
+- Quiz intro block (e.g., “Quick check before next lesson”)
+- List of 3–5 questions:
+  - MCQs (single/multiple correct)
+  - True/False
+  - Fill in the blank (text input or select)
+  - Drag & Drop (matching, sorting)
+- Optional:
+  - “I’m not sure” / “Skip” option
+  - Show question progress (e.g., 2 of 5)
+### 📥 Bottom Bar (Quiz Contextual)
+- “Submit” (only after all questions are attempted or skipped)
+- Sticky, minimal — disappears in Focus Mode
+-----
+## ✅ Post-Submission Feedback
+- Inline feedback per question (green = correct, red = incorrect)
+- Optional “Explain” toggle under each
+- Summary Block:
+  - Score: X/Y
+  - Message: “You’re ready to continue!” or “Review [Lesson] again”
+  - CTA: “Go to Next Lesson” or “Try Again”
+-----
+## 🔁 States
+- Loading questions
+- Empty quiz fallback: “No quiz defined for this lesson.”
+- Completion state → option to retry
+-----
+## 🔐 Access Control
+- Available only:
+  - To enrolled users
+  - If quiz is attached to a lesson they’ve unlocked
+- Preview users can attempt if attached to preview lesson
+-----
+## 🔗 Navigation
+- **In**:
+  - Auto-routed after certain lessons (based on course config)
+  - From course structure if user revisits
+- **Out**:
+  - Submit → Suggests next lesson
+  - Retry → Reload quiz with previous answers cleared
+-----
+## 🎨 UX Notes
+- Keyboard-friendly input
+- Subtle animations for transitions and feedback
+- Supports dark mode + distraction-free toggle
+-----
+## 🧠 UX Psychology Principles
+- Immediate feedback strengthens retention
+- Short quizzes reduce overwhelm
+- Post-quiz CTA keeps forward momentum
+## 🧭 Purpose
+Deliver video/text lessons with maximum flexibility, interactivity, and minimal distractions. Allows fast lesson switching, inline learning, and personalized assistance.
+
+-----
+## 👤 Target User
+- ✅ Enrolled students
+- 👀 Guest/unenrolled users (preview lessons only)
+-----
+## 🧱 Layout & Components
+### 🔝 Top Bar (Transparent, Native Feel)
+- 🔙 Back → Course Dashboard
+- 📖 Lesson title
+- ⚙️ Settings (font, theme, audio mode)
+- 🎯 **[Focus Mode Toggle Button]** (eye icon or “Zen Mode”)
+-----
+## 📚 Sidebar (Collapsible Drawer or Slide-in)
+- Tabbed interface:
+  - **[📑 Lessons]** – full course outline (current highlighted)
+    - Tapping changes lesson (with access gating)
+    - Chips on lessons: `✅`, `🔓`, `🔒`, `🧪`, etc.
+  - **[💬 Comments]** – discussion thread for this lesson
+  - **[📎 Tools]** – future AI/chat access, notes/bookmark tab
+- Collapses in Focus Mode
+-----
+## 📄 Main Content Area
+- Same as before:
+  - 🎥 Video section (if available)
+  - 📄 Text lesson (if available)
+  - 🧪 Inline quiz block (optional)
+- Chips at top: `Preview`, `Locked`, `Completed`, `Has Quiz`, etc.
+-----
+## 🔻 Bottom Bar (Contextual for Lesson Page Only)
+- Sticky, minimal icons:
+  - 📥 Download notes (if available)
+  - 📌 Bookmark this lesson
+  - 🤖 Ask AI
+  - ✅ Mark Complete
+  - 🧭 Next / Previous lesson arrows (hidden by default, reveal on scroll/tap)
+-----
+## 🌀 Focus Mode
+- Triggered via “Focus Mode” button (top right)
+- UI changes:
+  - Hide sidebar
+  - Hide top + bottom bars
+  - Expand text/video to full width
+  - Block notifications, distractions
+- Toggle again to restore UI
+-----
+## 🔁 Access States
+- `preview = true` → full access even for guests
+- `preview = false` → gated for enrolled only
+  - Non-enrolled = modal prompt on access attempt
+-----
+## 🔐 Access Control
+- Lessons gated by:
+  - Enrollment
+  - Preview status
+  - Lesson progression logic (if applied)
+- Sidebar filters locked lessons + chips them
+-----
+## 🔗 Navigation
+- Sidebar tab: switch between lessons
+- Contextual bottom bar:
+  - Previous/Next
+  - AI chat
+  - Bookmark
+- Completion triggers smart suggestions (“Ready for test?”)
+-----
+## 🎨 UX Notes
+- 📱 Mobile: sidebar becomes swipeable drawer
+- 💻 Desktop: persistent left sidebar + scrollable main
+- 🧘 Focus Mode = clean reading zone, no distractions
+- 🧩 Animations: smooth slide for sidebar/focus toggle, subtle tap feedback
+-----
+## 🧠 UX Psychology Principles
+- Sidebar = context = less disorientation
+- Focus Mode = cognitive calm + flow
+- Inline feedback + AI = reduced help-seeking hesitation
+- Preview chips = positive curiosity triggers
+## 🧭 Purpose
+Provide a unified, distraction-free interface to explore course structure, resume learning, and access notes/tests. Same screen for enrolled, guest, and logged-out users — access changes based on lesson visibility.
+
+-----
+## 👤 Target User
+- ✅ Enrolled users (full access)
+- 👀 Logged-in but not enrolled users (preview-only access)
+- 🚪 Logged-out users (preview-only access)
+-----
+## 🧱 UI Layout & Components
+### 🔝 Top Bar (Transparent)
+- 🍔 Menu | Course Title | ⚙️ Settings
+### 🔻 Bottom Navigation
+- 🏠 Home | 📚 Courses | 🧪 Tests | 💬 Discuss | 👤 Profile/Login
+-----
+## 📍 Resume Section (Enrolled Only)
+- If enrolled and in progress:
+  - “Continue learning: [Lesson Title]”
+  - Resume CTA → [[Lesson Page (Video/Text)]]
+-----
+## 🗂 Course Structure (Always Visible)
+- Organized by units/modules
+- Expandable list of lessons under each unit
+- Each lesson card shows:
+  - Title
+  - Progress (if applicable)
+  - 📄 Text / 🎥 Video icons
+  - Chips/Badges:
+    - 🔓 Preview (open to all)
+    - 🔒 Locked (non-enrolled access or progression-locked)
+    - ✅ Completed
+    - 🧪 Quiz available
+-----
+## 🧾 Notes Section
+- Access to:
+  - [[Ebook Reader View]]
+  - Downloadable notes (if enrolled)
+- Guest/unverified users → “Sign up to access full notes”
+-----
+## 🧪 Tests Section
+- Topic tests + full mocks shown
+- If not enrolled → clicking test = modal prompt to enroll
+- Enrolled users → direct access to [[Test Page (Mock Practice)]]
+-----
+## 🤖 AI Section (Optional)
+- AI Tutor or Coach tools available only if enrolled
+- Guest → prompt: “Unlock AI tools with enrollment”
+-----
+## 🔁 States
+- **Guest/Unenrolled View**:
+  - Can see full structure
+  - Can access only `🔓 Preview` lessons
+  - Clicking others shows modal: “Sign up or enroll to continue”
+- **Enrolled View**:
+  - Full lesson/test/note access
+  - Progress and resume tracking shown
+-----
+## 🔐 Access Control
+- ✅ Course structure is always visible
+- ✅ Preview lessons accessible by anyone
+- 🔒 All other lessons/tests/notes require enrollment
+- 🧪 Tests and AI tools hidden or access-blocked for guests
+-----
+## 🔗 Navigation
+- **In**:
+  - From [[All Courses Page]]
+  - From [[Home Page]] resume section
+- **Out**:
+  - Lesson click:
+    - If preview: → [[Lesson Page (Video/Text)]]
+    - If locked: → Modal: “Enroll to access”
+  - Notes → [[Ebook Reader View]] (gated if not enrolled)
+  - Test → [[Test Page (Mock Practice)]] (gated if not enrolled)
+-----
+## 🎨 UX Notes
+- 🧘 No visual difference between guest and enrolled views — only **interactions** change
+- 📱 All chips are color-coded but subtle (Preview = green, Locked = grey, Completed = blue)
+- 📌 "Enroll Now" floating CTA (for unenrolled users) — low contrast, non-blocking
+- 🌀 Animations on lesson unlocks, chip transitions, and loading state
+-----
+## 🧠 UX Psychology Principles
+- Single consistent interface reduces friction and increases clarity
+- Preview content builds trust, lowers resistance to signup
+- Chips/badges help users self-orient (what's available, what's next)
+- “Enroll now” prompts are contextual, not disruptive
+# 📅 Screen: Revision Planner Page
+## 🧭 Purpose
+Allow students to plan their weekly or custom revision sessions based on completed lessons, tests, and AI insights.
+
+-----
+## 🧱 Features
+- AI-suggested revision blocks (auto-generated)
+- Manual planner:
+  - Add slot (lesson/test/note)
+  - Set due date
+  - Mark as done
+- Calendar view (weekly/month)
+- Stats: % completed this week
+-----
+## 🔗 Navigation
+- From Test Result, Lesson Page, Dashboard
+-----
+## 🎯 Psychology
+- Promotes accountability
+- Encourages spaced repetition
+# 📄 Screen: Single Note View
+## 🧭 Purpose
+Let users read a specific note or reference document attached to a lesson or topic. Designed for focus and clarity — supports highlighting, copying, and linking.
+
+-----
+## 👤 Target User
+- ✅ Enrolled users
+- 👀 Preview/guest if the note is public/free
+-----
+## 🧱 UI Layout & Components
+- Header:
+  - Note Title
+  - Tags
+  - Link to source lesson (if available)
+- Markdown-rendered note content
+- Features:
+  - Search in note
+  - Highlight text (saves locally or to profile)
+  - Copy/citation support
+  - Bookmark for later
+-----
+## 📥 Toolbar (Sticky or Floating)
+- Back to Library
+- Print
+- “Open in Ebook View”
+- “Bookmark”
+- “Ask AI about this note”
+-----
+## 🔁 States
+- Empty: “Note not found or access denied.”
+- Loading spinner
+-----
+## 🔐 Access Control
+- Tied to course enrollment
+- Public notes bypass auth
+-----
+## 🔗 Navigation
+- **In**: From Lesson Page sidebar tab, Notes Library
+- **Out**: [[Ebook Reader View]], Profile Bookmarks
+-----
+## 🎨 UX Notes
+- Narrow reading column (for focus)
+- Clean white/dark themes
+- Highlighted text persists per user
+# 🧠 Screen: Test Explanation Screen
+## 🧭 Purpose
+Allow deep review of each test question with **video and text explanations**, and strengthen understanding through **similar questions** for follow-up practice.
+
+-----
+## 👤 Target User
+- ✅ Enrolled students
+- 🧑‍🏫 Admins/content creators (manage explanations, review metadata)
+- 🚫 Guests: not allowed
+-----
+## 🧱 UI Layout & Components
+### 🔝 Top Bar
+- Back → [[Test Result Page]]
+- Test title + attempt time
+- Filter buttons:
+  - ❌ Incorrect only
+  - ✅ Correct only
+  - 🟡 Marked for Review
+- Toggle: Collapse/Expand all explanations
+-----
+## 🧩 Main Explanation Viewer
+### 🧪 Per-Question Block
+- **Question text**
+- **Your answer**
+- **Correct answer(s)** highlighted
+- ✅ Indicator: Correct / ❌ Incorrect / ⚪ Skipped
+- 🔁 **“Mark for revision”** toggle
+### 📄 Text Explanation
+- Clear, focused explanation of the answer
+- Can include:
+  - Rules, logic, shortcuts
+  - Tables or diagrams (rendered in markdown)
+  - Memory aids or links to related lessons
+### 📺 Video Explanation (if available)
+- Embedded player under text explanation
+- Optional: “Play all explanations” autoplay mode
+### 🔁 Similar Questions Section
+- 2–3 questions pulled from the same concept/tag
+- User can:
+  - Attempt inline
+  - Tap to open full question
+- Helps reinforce learning through spaced repetition
+-----
+## 🧠 Additional Actions
+- Retry this question
+- Bookmark for later
+- “Ask AI to explain differently” (contextual button)
+- Report issue (bad explanation, wrong answer, etc.)
+-----
+## 🔁 States
+- No explanation available → placeholder + “Coming soon”
+- Video only or text only fallback
+- Similar questions loading state
+-----
+## 🔐 Access Control
+- Only enrolled users who completed the test
+- Preview test users cannot access this screen
+-----
+## 🔗 Navigation
+- **In**:
+  - [[Test Result Page]] → “Review Questions”
+- **Out**:
+  - Similar question tap → new inline quiz or full view
+  - “Explain Again with AI” → [[AI Lesson Helper Sidebar]]
+  - Related lesson → [[Lesson Page (Video/Text)]]
+-----
+## 🎨 UX Notes
+- Video + text stack collapsible
+- Similar questions displayed in card/grid
+- Sticky sidebar with question navigator (color-coded status)
+- Dark mode supported
+-----
+## 🧠 UX Psychology Principles
+- Dual-format explanation = accommodates different learning styles
+- Similar questions = active reinforcement
+- Retry + bookmark = personal learning loop
+- “Explain again with AI” reduces frustration and encourages self-driven clarity
+# 🏆 Screen: Test Leaderboard Page
+## 🧭 Purpose
+Display ranked performance of all users who attempted a given test. Designed to build motivation, spark competition, and show where a user stands among peers — with strict control over what’s visible.
+
+-----
+## 👤 Target User
+- ✅ Enrolled students who attempted the test
+- 🧑‍🏫 Admins (can view full list, filter by cohort/batch)
+- 🚫 Guest users: not allowed (redirect to login/enroll prompt)
+-----
+## 🧱 UI Layout & Components
+### 🔝 Top Bar
+- Test Title (e.g., “English Mock #3”)
+- Back button → [[Test Result Page]]
+- Toggle: “All Time” / “This Week” / “This Month”
+-----
+## 🧩 Leaderboard Table
+
+|Rank|Avatar|Username|Score|Time Taken|
+| :-: | :-: | :-: | :-: | :-: |
+|🥇 1|img|@Rahul\_SSC|47/50|28:13|
+|🥈 2|img|@AditiP|46/50|32:40|
+|🥉 3|img|@You|45/50|27:10|
+|...|...|...|...|...|
+
+- ✅ Your entry is highlighted
+- 📌 Pinned at top or bottom if out of top 10
+- ⚙️ Admins can toggle visibility for banned/hidden profiles
+-----
+## 🔒 Privacy Considerations
+- Only shows:
+  - Username (or anonymized if profile is private)
+  - Avatar (optional)
+  - Score & time
+- Users with private profiles appear as `@Anonymous`
+- No email, full name, or course list shown
+-----
+## 📥 Sidebar (Mobile Toggle)
+- Filters:
+  - Rank Range (Top 10, Top 50, All)
+  - Your Position
+  - Friends Only (if community feature added later)
+-----
+## 🎯 Badges (Optional/Future Feature)
+- “🔥 Fastest Finisher”
+- “🎯 Most Accurate”
+- “📈 Most Improved” (based on past attempt delta)
+-----
+## 🔁 States
+- Empty leaderboard → “Be the first to take this test!”
+- Loading/error state with retry button
+-----
+## 🔐 Access Control
+- Must be logged in AND have completed this test
+- If test is `preview = true`:
+  - Guest can take test, but cannot see leaderboard
+- Admins can view leaderboard for all users
+-----
+## 🔗 Navigation
+- **In**:
+  - From [[Test Result Page]]
+  - From test history (side drawer or profile)
+- **Out**:
+  - Click username → [[User Dashboard]] (if public profile enabled)
+  - Return to [[Test Explanation Screen]] or [[Test Page]]
+-----
+## 🎨 UX Notes
+- Animated ranks (rise/fall) with emoji medals
+- Highlighted current user even if not in top 10
+- Subtle use of gold/silver/bronze for podium
+-----
+## 🧠 UX Psychology Principles
+- Leaderboards boost engagement and self-assessment
+- Highlighting user’s own progress fosters intrinsic motivation
+- Anonymous fallback avoids pressure or shame
+- Gamified titles can increase test repetition and competition
+# 📚 Screen: Notes Library Page
+## 🧭 Purpose
+Provide a centralized list of all notes and ebooks the user has access to — organized by subject, course, and topic. Acts as a searchable, filterable library for focused reading and revision.
+
+-----
+## 👤 Target User
+- ✅ Enrolled users
+- 🧑‍🏫 Admins (edit/upload/manage)
+- 👀 Preview access for free notes (optional)
+-----
+## 🧱 UI Layout & Components
+- 📖 Search bar (by title, keyword, tag)
+- Filter chips:
+  - Subject (English, Psychology, etc.)
+  - Type (Note, Ebook, Worksheet)
+  - Course (linked to course slug)
+- Card/grid layout for notes:
+  - Title
+  - Tags (e.g. “Grammar”, “Vocab”)
+  - File type icon (PDF/Text/Interactive)
+  - Tap → [[Single Note View]]
+-----
+## 🔁 States
+- Empty: “You haven’t accessed any notes yet.”
+- Loading / search fallback
+-----
+## 🔐 Access Control
+- Only enrolled users can view locked notes
+- Free/public notes → accessible without login
+-----
+## 🔗 Navigation
+- **In**: From Lesson Page, Course Dashboard, Profile
+- **Out**: [[Single Note View]], [[Ebook Reader View]]
+-----
+## 🎨 UX Notes
+- Minimal, mobile-friendly grid
+- Filters are collapsible on mobile
+- Tags clickable to narrow results
+## 🧭 Purpose
+Deliver full-length or topic-wise practice tests with a clean, exam-like interface. Includes flexible modes (Exam/Practice), sidebar navigation, and smart access gating.
+
+-----
+## 👤 Target User
+- ✅ Enrolled students
+- 👀 Guest/unenrolled users (preview tests only)
+- 🧑‍🏫 Admins/Authors (with edit/test data access)
+-----
+## 🧱 UI Layout & Components
+### 🔝 Top Bar
+- Test Title (e.g., “Grammar Drill #3”)
+- ⏱️ Timer (optional; sticky)
+- 🧠 Mode indicator: Exam / Practice / Preview
+- 🚪 Exit button → prompts “Are you sure?”
+- ⚙️ Settings: fullscreen toggle, theme, scroll/one-question mode
+-----
+## 📚 Sidebar (Collapsible)
+- List of all questions
+  - Color-coded circles:
+    - 🟢 Attempted
+    - ⚪ Not Attempted
+    - 🟡 Marked for Review
+  - Click to jump
+- Total stats shown below (X attempted, Y unattempted)
+- Sticky on desktop, collapsible drawer on mobile
+-----
+## 🧩 Main Test Content
+### 🧪 Question Area
+- One at a time (default), or scroll-all (if enabled)
+- Supports:
+  - MCQ, multi-select
+  - Fill-in-the-blank
+  - Match pairs / drag-and-drop (TBD)
+- Actions:
+  - “Mark for Review”
+  - “Clear Response”
+  - “Submit Test” (final button)
+-----
+## 🧠 Optional Modes
+- 🧪 **Practice Mode**:
+  - Feedback after each question (optional)
+  - Retry button after incorrect attempt
+- 📘 **Exam Mode**:
+  - No feedback until the end
+  - Strict time + no backtracking (optional)
+- 👀 **Preview Mode**:
+  - Available to all users
+  - Results not saved, prompt login to track
+-----
+## ✅ Submission & End
+- On final submit (or timeout):
+  - Confirmation dialog
+  - Redirect → [[Test Result Page]]
+- Auto-submit if time expires
+-----
+## 🔁 States
+- Live: In-progress
+- Timeout: Force-submit
+- Preview: Read-only (no save)
+- Invalid test (unavailable) → “This test is not accessible.”
+-----
+## 🔐 Access Control
+- `preview = true` → public access
+- All others gated by:
+  - Enrollment
+  - Test unlock logic (if part of course flow)
+-----
+## 🔗 Navigation
+- **In**:
+  - [[Course Dashboard]] → “Start Test”
+  - [[Home Page]] → Test Section
+  - Direct deep link (if previewable)
+- **Out**:
+  - Submit → [[Test Result Page]]
+  - “Leaderboard” → [[Test Leaderboard Page]]
+  - “Explanation” → [[Test Explanation Screen]]
+-----
+## 🧭 Future Screens This Links To
+- [[Test Result Page]]
+- [[Test Leaderboard Page]]
+- [[Test Explanation Screen]]
+- [[Test Attempt Review Screen]] (Optional)
+-----
+## 🎨 UX Notes
+- Minimal colors, focus on function
+- Mobile-first design with collapsing sidebar
+- Hoverable tooltips for icon actions
+- Question status auto-updates on interaction
+-----
+## 🧠 UX Psychology Principles
+- Sidebar reduces uncertainty and gives control
+- Attempt indicators support recall and planning
+- Practice mode enables safe space → low pressure
+- Leaderboard taps into healthy competition (toggleable)
+# 📊 Screen: Test Result Page
+## 🧭 Purpose
+Display a clear, structured breakdown of the user’s test performance. Highlights strengths, weaknesses, and next steps through scores, analysis, and AI-enhanced feedback.
+
+-----
+## 👤 Target User
+- ✅ Enrolled students who completed a test
+- 🧑‍🏫 Admins (for performance review)
+- 🚫 Guest/unenrolled users: results not saved or shown (only temp preview post-submit)
+-----
+## 🧱 UI Layout & Components
+### 🔝 Top Bar
+- Test title
+- Date & time taken
+- Back button (to dashboard or test list)
+- Options menu (Download PDF, View Leaderboard, Share Result)
+-----
+## 🧩 Main Result Area
+### 🟢 1. **Score Summary**
+- Final Score: e.g., 34 / 50 (68%)
+- Time taken
+- Accuracy %
+- Rank (if leaderboard enabled)
+- Visual Score Ring / Bar Graph
+### 🟡 2. **Section/Topic Breakdown**
+- Table of:
+  - Topic / Section
+  - # Questions
+  - Correct / Wrong / Skipped
+  - Score per section
+- Colored performance bars
+### 🧠 3. **AI Insights**
+- “You struggled with: [Topics]”
+- “We suggest revisiting: [Lesson Links]”
+- “Ready for full mock? → Take Now”
+- Option: "Ask AI to explain wrong answers"
+### 🧪 4. **Question Summary Grid**
+- Visual grid of all questions:
+  - ✅ Green = Correct
+  - ❌ Red = Incorrect
+  - ⚪ Skipped
+  - 🟡 Marked for Review
+- Tap → opens [[Test Explanation Screen]] at that question
+-----
+## 📥 Actions Section (Sticky Footer on Mobile)
+- 🧾 View Detailed Explanation → [[Test Explanation Screen]]
+- 🏆 View Leaderboard → [[Test Leaderboard Page]]
+- 🔁 Retry Incorrect Questions
+- 📥 Download Report (PDF)
+- 📚 Suggested Lessons / Tests
+-----
+## 🔁 States
+- Test in “reviewable” state
+- If result corrupted or invalid → “We couldn’t process your score”
+-----
+## 🔐 Access Control
+- Only visible if:
+  - User has completed the test
+  - Enrolled in the course (if test is course-scoped)
+- Guest users → see only temp score after preview test, then prompt to sign up
+-----
+## 🔗 Navigation
+- **In**:
+  - Auto-redirect after [[Test Page (Mock/Practice)]] submit
+  - From test history log
+- **Out**:
+  - Detailed question view → [[Test Explanation Screen]]
+  - Leaderboard → [[Test Leaderboard Page]]
+  - Suggested revision → [[Lesson Page]]
+-----
+## 🎨 UX Notes
+- Colors indicate performance at a glance
+- Everything tap-to-expand (mobile first)
+- Progress charts animated smoothly
+- No clutter: strong emphasis on action buttons
+-----
+## 🧠 UX Psychology Principles
+- Feedback-first: keeps user aware of growth
+- Positive reinforcement (“You improved in Vocabulary”)
+- Smart next steps reduce post-test inertia
+- Grid gives visual closure (what they did well vs. not)
+# ⚖️ Screen: Legal / Privacy Page
+## 🧭 Purpose
+Display platform’s privacy policy, terms of use, and user data rights.
+
+-----
+## 🧱 Structure
+- Sections:
+  - Privacy Policy
+  - Terms of Service
+  - Cookie Policy
+  - User Data & AI Disclaimers
+- Optional: Last updated date
+-----
+## 🔗 Navigation
+- Footer link
+-----
+## 🔐 Public
+## 🧭 Purpose
+Serve as the **personal dashboard home** for authenticated users. Zero distractions, zero marketing fluff. Resumes learning quickly, surfaces key actions (courses, tests, revision) clearly.
+
+NOT a landing/marketing page — that lives on edumynt.com
+
+-----
+## 👤 Target User
+- Logged-in students (primary)
+- Admins (same UI with extra controls shown in Dashboard)
+- No guest/preview users — they land on preview lesson or course page
+-----
+## 🧱 UI Layout & Components
+### 🔝 Top Bar (Transparent)
+- Left: 🍔 Menu (drawer toggle)
+- Right:
+  - 🔍 Search (lessons, questions, notes)
+  - ⚙️ Settings
+### 🔻 Bottom Navigation Bar (Fixed)
+- 🏠 Home (active)
+- 📚 Courses
+- 🧪 Tests
+- 💬 Discuss
+- 👤 Profile
+-----
+## 🧩 Main Scrollable Sections (Stacked Vertically)
+### 💼 1. **Resume Learning (Banner Carousel)** 💯
+- If enrolled in any course → show:
+  - “Continue your lesson in [Course Name]”
+  - [Resume] button → goes directly to [[Lesson Page (Video/Text)]]
+- If multiple courses → horizontal scroll with cards
+### 📣 2. **Promotions / Updates Carousel**
+- Uses cards with:
+  - “New course just launched!”
+  - “Mock test series open now”
+  - “Weekly revision planner available”
+- Dismissable or swipable
+- Non-intrusive → 1 visible at a time
+### 📚 3. **Your Courses Section**
+- Grid/list of enrolled courses
+- Card for each:
+  - Title, progress bar, quick access to dashboard or resume
+- Tap → [[Course Dashboard (Enrolled)]]
+### 🧪 4. **Available Tests Section**
+- Filters: Smart | Topic-wise | Full Mock
+- Cards:
+  - Title, subject, time limit, “Start Test” CTA
+- Tap → [[Test Page (Mock Practice)]]
+### 🔁 5. **Smart Revision (Optional AI-Based)** 💡
+- “You forgot this recently…” (based on quiz data)
+- “Try this mini-quiz to revise”
+- Pulls from AI Test Coach logic
+### 📎 6. **Quick Links (Tiles or Cards)**
+- “View Notes”
+- “Study Planner”
+- “AI Doubt Solver”
+- “Join Community” (opens community page)
+-----
+## 🔁 States
+- Empty state: “No enrolled courses yet. Browse courses.”
+- Incomplete profile → prompt to add name/photo in subtle top banner
+- Tests completed → show summary stats here briefly
+-----
+## 🔐 Access Control
+- Requires login
+- If not logged in → redirect to /login
+- No public access to this page
+-----
+## 🔗 Navigation
+- **In**: Direct visit to app.edumynt.com, logo click, bottom nav “Home”
+- **Out**:
+  - Resume → [[Lesson Page (Video/Text)]]
+  - Course → [[Course Dashboard (Enrolled)]]
+  - Test → [[Test Page (Mock Practice)]]
+  - AI tools → respective pages
+-----
+## 🎨 UX & Motion Notes
+- 📱 Native app layout (no visible background on top bar)
+- 🌀 Subtle animations for:
+  - Button clicks (ripple/scale)
+  - Carousel transitions
+  - Section entrance (fade-in on scroll)
+- 🧘 Minimal text, no marketing, no testimonials
+- 🎯 Everything must help users *act* — no information overload
+- 🌓 Honors dark mode and font settings
+-----
+## 🧠 UX Psychology Notes
+- Resume-first flow reduces friction (choice overload → decision fatigue avoided)
+- Separation of concerns → no marketing distractions improves focus
+- Bottom nav reduces cognitive load — muscle memory for repeat users
+- Clear “next steps” from every section = habit reinforcement
+- Subtle prompts (e.g. “You’ve completed 70% of English — revise this topic?”) nudge progress without anxiety
+# 🚫 Screen: 404 Not Found Page
+## 🧭 Purpose
+Display when a user navigates to a non-existent route or broken link.
+
+-----
+## 👤 Target User
+- Anyone (guests, logged-in users, admins)
+-----
+## 🧱 UI Components
+- Large “404” graphic
+- Message: “Oops! That page doesn't exist.”
+- Suggested actions:
+  - 🔙 Go Back
+  - 🏠 Return to Home
+  - 🔍 Search for something else
+- Optional: error report link
+-----
+## 🎨 UX Notes
+- Friendly illustration
+- Matches app theme (light/dark)
+- No distractions, quick CTA
+-----
+## 🔁 States
+- Optional: custom error codes (403, 500, etc.)
+-----
+## 🔗 Navigation
+- Automatically triggered by invalid routes
+- Linked from broken nav/errors
+# 💳 Screen: Purchase History Page
+## 🧭 Purpose
+Show all user payments and course enrollments — including free/discounted enrollments, refunds, and receipts.
+
+-----
+## 👤 Target User
+- ✅ Logged-in users
+- 🧑‍💼 Admins (access via user profile)
+-----
+## 🧱 UI Components
+- Table:
+
+|Date|Course|Amount|Status|Receipt|
+| :-: | :-: | :-: | :-: | :-: |
+
+- Status: ✅ Paid / 🔄 Pending / ❌ Refunded
+- Actions:
+  - View Course
+  - Download Invoice
+- Optional Filters:
+  - Time period
+  - Status
+  - Course title
+-----
+## 🔗 Navigation
+- From Profile Page
+- From Course Checkout page (post-purchase)
+-----
+## 🔁 States
+- No purchases → “You haven’t purchased any courses yet.”
+- Loading / errors
+-----
+## 🔐 Access Control
+- Only visible to the user and admins
+-----
+## 🎨 UX Notes
+- Simple table layout with mobile support
+- Downloadable invoices in PDF format
+# 🏅 Screen: Achievements & Streak Page
+## 🧭 Purpose
+Motivate users with visual badges, learning streaks, and milestone unlocks.
+
+-----
+## 🧱 Sections
+- Current streak (calendar view)
+- Badges earned (cards)
+- Upcoming rewards
+- Reset history (if streaks were broken)
+-----
+## 🔗 Navigation
+- From Profile, Dashboard, Daily Practice
+-----
+## 🎯 Psychology
+- Encourages habit formation
+- Reinforces daily learning
+## 🧭 Purpose
+A unified user profile system with two views:
+
+- 🔐 **Private Dashboard** (for the logged-in user)
+- 🧍 **Public Profile** (optional, limited visibility to others)
+-----
+## 👤 Target User
+- All registered users
+- Viewable by:
+  - The user themselves (full access)
+  - Other users (if profile is public)
+-----
+## 🧑 Public View (`/u/:username`)
+### 🔘 Visible Fields (if profile visibility = ON)
+- 🖼️ Avatar
+- 👤 Username (or nickname)
+- 🏷️ Optional Bio/Tagline
+- 📚 Enrolled course count (not course names)
+- 🔢 Current streak (if toggled)
+- ❌ Hidden fields:
+  - Course progress, notes, test scores, AI data, email
+### 🔒 If profile is private
+- Display: “This user has chosen to keep their profile private.”
+- Avatar + Username still visible (or anonymized based on settings)
+-----
+## 🔐 Private View (`/dashboard/profile`)
+Visible only to the logged-in user. Includes the following sections:
+### 1\. 📝 Edit Profile
+- Change avatar, name, password
+- Username / slug (for public URL)
+- Toggle: “Public Profile: ON / OFF”
+- Per-field toggles for what’s shown publicly
+### 2\. 📊 My Learning Stats
+- Total lessons completed
+- Quizzes taken
+- Average score
+- Streak info (days active)
+- Graph of weekly/monthly activity
+### 3\. 📚 My Enrollments
+- List of enrolled courses
+- Progress bars per course
+- CTA buttons: “Resume”, “View Dashboard”
+### 4\. 📥 Saved Notes / Bookmarks
+- Downloaded PDFs
+- Bookmarked lessons/questions
+### 5\. 🧪 Test History
+- Past test results with date, topic, score
+- Retry + explanation buttons
+### 6\. 🤖 AI Usage (Optional)
+- AI chat stats
+- Recent questions asked
+- Saved answers
+### 7\. ⚙️ Preferences
+- Theme: Light / Dark
+- Font size
+- Default reading/viewing mode
+- Notification preferences
+-----
+## 🔁 States
+- Guest visits `/u/username` → public view or “private profile” message
+- Logged-in user → redirected to full `/dashboard/profile`
+- Empty states:
+  - No enrollments → “You haven’t joined any courses yet”
+  - No test activity → “Start your first test to see insights”
+-----
+## 🔐 Access Control
+- `/u/:username`: visible only if profile is public
+- `/dashboard/profile`: requires authentication
+- User can toggle:
+  - Profile visibility
+  - What fields are public (bio, course count, streak, etc.)
+-----
+## 🔗 Navigation
+- From avatar dropdown → “My Profile”
+- From course comments → clickable user profiles
+- Public view link: `app.edumynt.com/u/raj`
+-----
+## 🎨 UX Notes
+- Cards for each stats section
+- Tabs or collapsible panels to separate areas
+- Subtle transitions for stat loading
+- Contextual tooltips (e.g. “visible publicly”)
+-----
+## 🧠 UX Psychology Principles
+- Letting users control their public exposure builds trust
+- Stats reinforce self-awareness and motivation
+- Optional anonymity promotes open discussion participation
+- Activity visualizations reinforce habit and growth
+# ⚖️ Screen: Legal / Privacy Page
+## 🧭 Purpose
+Display platform’s privacy policy, terms of use, and user data rights.
+
+-----
+## 🧱 Structure
+- Sections:
+  - Privacy Policy
+  - Terms of Service
+  - Cookie Policy
+  - User Data & AI Disclaimers
+- Optional: Last updated date
+-----
+## 🔗 Navigation
+- Footer link
+-----
+## 🔐 Public
