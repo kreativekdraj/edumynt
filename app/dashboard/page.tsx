@@ -1,7 +1,7 @@
 'use client';
 
-import React, { useEffect, useState, useCallback, useRef } from 'react';
-import { useRouter } from 'next/navigation';
+import React, { useEffect, useState, useCallback } from 'react';
+import { useRouter, useSearchParams } from 'next/navigation';
 import { User } from '@supabase/supabase-js';
 import useEmblaCarousel from 'embla-carousel-react';
 import { 
@@ -52,15 +52,9 @@ export default function DashboardPage() {
   const [enrolledCourses, setEnrolledCourses] = useState<UserCourseEnrollment[]>([]);
   const [coursesLoading, setCoursesLoading] = useState(true);
   const [mounted, setMounted] = useState(false);
-  const [activeSection, setActiveSection] = useState('enrolled');
   const router = useRouter();
+  const searchParams = useSearchParams();
   const [emblaRef, emblaApi] = useEmblaCarousel({ loop: false, align: 'start', containScroll: 'trimSnaps' });
-
-  // Refs for scroll navigation
-  const enrolledRef = useRef<HTMLDivElement>(null);
-  const englishRef = useRef<HTMLDivElement>(null);
-  const psychologyRef = useRef<HTMLDivElement>(null);
-  const mathematicsRef = useRef<HTMLDivElement>(null);
 
   const scrollPrev = useCallback(() => {
     if (emblaApi) emblaApi.scrollPrev();
@@ -74,6 +68,16 @@ export default function DashboardPage() {
   useEffect(() => {
     setMounted(true);
   }, []);
+
+  // Handle URL parameters for tab switching
+  useEffect(() => {
+    if (!mounted) return;
+    
+    const tab = searchParams.get('tab');
+    if (tab && ['home', 'courses', 'tests', 'discuss', 'profile'].includes(tab)) {
+      setActiveTab(tab);
+    }
+  }, [searchParams, mounted]);
 
   useEffect(() => {
     if (!mounted) return;
@@ -131,49 +135,6 @@ export default function DashboardPage() {
     fetchCourses();
   }, [user, mounted]);
 
-  // Intersection Observer for active section detection
-  useEffect(() => {
-    if (activeTab !== 'courses') return;
-
-    const observer = new IntersectionObserver(
-      (entries) => {
-        entries.forEach((entry) => {
-          if (entry.isIntersecting && entry.intersectionRatio > 0.5) {
-            const sectionId = entry.target.getAttribute('data-section');
-            if (sectionId) {
-              setActiveSection(sectionId);
-            }
-          }
-        });
-      },
-      {
-        threshold: [0.1, 0.5, 0.9],
-        rootMargin: '-100px 0px -50% 0px'
-      }
-    );
-
-    const sections = [enrolledRef.current, englishRef.current, psychologyRef.current, mathematicsRef.current];
-    sections.forEach((section) => {
-      if (section) observer.observe(section);
-    });
-
-    return () => {
-      sections.forEach((section) => {
-        if (section) observer.unobserve(section);
-      });
-    };
-  }, [activeTab]);
-
-  const scrollToSection = (sectionRef: React.RefObject<HTMLDivElement>, sectionId: string) => {
-    if (sectionRef.current) {
-      sectionRef.current.scrollIntoView({ 
-        behavior: 'smooth',
-        block: 'start'
-      });
-      setActiveSection(sectionId);
-    }
-  };
-
   const handleSignOut = async () => {
     await signOut();
   };
@@ -186,6 +147,41 @@ export default function DashboardPage() {
       // Refresh enrolled courses
       const userEnrollments = await getUserEnrolledCourses(user.id);
       setEnrolledCourses(userEnrollments);
+    }
+  };
+
+  const handleContinueCourse = (courseId: string) => {
+    // Navigate to the course details page
+    router.push(`/course/${courseId}`);
+  };
+
+  const getFirstLessonOfCourse = async (courseId: string) => {
+    try {
+      const { data: lessons, error } = await supabase
+        .from('lessons')
+        .select('id')
+        .eq('course_id', courseId)
+        .order('order_index', { ascending: true })
+        .limit(1);
+
+      if (error || !lessons || lessons.length === 0) {
+        return null;
+      }
+
+      return lessons[0].id;
+    } catch (error) {
+      console.error('Error fetching first lesson:', error);
+      return null;
+    }
+  };
+
+  const handleStartLearning = async (courseId: string) => {
+    const firstLessonId = await getFirstLessonOfCourse(courseId);
+    if (firstLessonId) {
+      router.push(`/lesson/${firstLessonId}`);
+    } else {
+      // Fallback to course page
+      router.push(`/course/${courseId}`);
     }
   };
 
@@ -447,8 +443,8 @@ export default function DashboardPage() {
 
         {/* Main content area */}
         <main className="py-6 px-4 sm:px-6 lg:px-8 pb-20 lg:pb-6">
-          {activeTab === 'home' && <HomeContent enrolledCourses={enrolledCourses} coursesLoading={coursesLoading} />}
-          {activeTab === 'courses' && <CoursesContent courses={courses} enrolledCourses={enrolledCourses} onEnroll={handleEnrollInCourse} coursesLoading={coursesLoading} activeSection={activeSection} scrollToSection={scrollToSection} enrolledRef={enrolledRef} englishRef={englishRef} psychologyRef={psychologyRef} mathematicsRef={mathematicsRef} />}
+          {activeTab === 'home' && <HomeContent enrolledCourses={enrolledCourses} coursesLoading={coursesLoading} onContinueCourse={handleContinueCourse} onStartLearning={handleStartLearning} />}
+          {activeTab === 'courses' && <CoursesContent courses={courses} enrolledCourses={enrolledCourses} onEnroll={handleEnrollInCourse} coursesLoading={coursesLoading} onContinueCourse={handleContinueCourse} />}
           {activeTab === 'tests' && <TestsContent />}
           {activeTab === 'discuss' && <DiscussContent />}
           {activeTab === 'profile' && <ProfileContent user={user} onSignOut={handleSignOut} />}
@@ -478,7 +474,12 @@ export default function DashboardPage() {
   );
 }
 
-function HomeContent({ enrolledCourses, coursesLoading }: { enrolledCourses: UserCourseEnrollment[], coursesLoading: boolean }) {
+function HomeContent({ enrolledCourses, coursesLoading, onContinueCourse, onStartLearning }: { 
+  enrolledCourses: UserCourseEnrollment[], 
+  coursesLoading: boolean,
+  onContinueCourse: (courseId: string) => void,
+  onStartLearning: (courseId: string) => void
+}) {
   const [emblaRef] = useEmblaCarousel({ 
     loop: false, 
     align: 'start',
@@ -516,7 +517,11 @@ function HomeContent({ enrolledCourses, coursesLoading }: { enrolledCourses: Use
             </div>
             <div className="mt-auto">
               <Progress value={enrollment.progress || 0} className="mb-3" />
-              <Button size="sm" className="w-full mt-auto">
+              <Button 
+                size="sm" 
+                className="w-full mt-auto"
+                onClick={() => onContinueCourse(enrollment.course_id)}
+              >
                 Continue Learning
                 <ChevronRight className="h-4 w-4 ml-1" />
               </Button>
@@ -533,7 +538,14 @@ function HomeContent({ enrolledCourses, coursesLoading }: { enrolledCourses: Use
       <div className="bg-gradient-to-r from-blue-600 to-indigo-600 rounded-2xl p-6 text-white">
         <h1 className="text-2xl font-bold mb-2">Welcome back! 👋</h1>
         <p className="text-blue-100 mb-4">Ready to continue your learning journey?</p>
-        <Button className="bg-white text-blue-600 hover:bg-blue-50">
+        <Button 
+          className="bg-white text-blue-600 hover:bg-blue-50"
+          onClick={() => {
+            if (enrolledCourses.length > 0) {
+              onStartLearning(enrolledCourses[0].course_id);
+            }
+          }}
+        >
           <Play className="h-4 w-4 mr-2" />
           Resume Learning
         </Button>
@@ -711,29 +723,14 @@ function HomeContent({ enrolledCourses, coursesLoading }: { enrolledCourses: Use
   );
 }
 
-function CoursesContent({ 
-  courses, 
-  enrolledCourses, 
-  onEnroll, 
-  coursesLoading,
-  activeSection,
-  scrollToSection,
-  enrolledRef,
-  englishRef,
-  psychologyRef,
-  mathematicsRef
-}: { 
+function CoursesContent({ courses, enrolledCourses, onEnroll, coursesLoading, onContinueCourse }: { 
   courses: Course[], 
   enrolledCourses: UserCourseEnrollment[], 
   onEnroll: (courseId: string) => void,
   coursesLoading: boolean,
-  activeSection: string,
-  scrollToSection: (ref: React.RefObject<HTMLDivElement>, sectionId: string) => void,
-  enrolledRef: React.RefObject<HTMLDivElement>,
-  englishRef: React.RefObject<HTMLDivElement>,
-  psychologyRef: React.RefObject<HTMLDivElement>,
-  mathematicsRef: React.RefObject<HTMLDivElement>
+  onContinueCourse: (courseId: string) => void
 }) {
+  const [activeSubject, setActiveSubject] = useState('enrolled');
 
   const isEnrolled = (courseId: string) => {
     return enrolledCourses.some(enrollment => enrollment.course_id === courseId);
@@ -744,68 +741,13 @@ function CoursesContent({
     return enrollment?.progress || 0;
   };
 
-  const subjects = [
-    { id: 'enrolled', label: 'Enrolled', ref: enrolledRef },
-    { id: 'English', label: 'English', ref: englishRef },
-    { id: 'Psychology', label: 'Psychology', ref: psychologyRef },
-    { id: 'Mathematics', label: 'Mathematics', ref: mathematicsRef }
-  ];
+  const subjects = ['enrolled', 'English', 'Psychology', 'Mathematics'];
   
-  const getCoursesForSubject = (subject: string) => {
+  const getFilteredCourses = (subject: string) => {
     if (subject === 'enrolled') {
       return enrolledCourses.map(e => e.course).filter(Boolean) as Course[];
     }
     return courses.filter(course => course.subject === subject);
-  };
-
-  const renderCourseCard = (course: Course) => {
-    const enrolled = isEnrolled(course.id);
-    const progress = getEnrollmentProgress(course.id);
-    
-    return (
-      <Card key={course.id} className="hover:shadow-lg transition-shadow">
-        <CardContent className="p-3 sm:p-4">
-          <div className="flex items-center gap-3">
-            <div className={`p-2 rounded-lg ${
-              course.subject === 'English' ? 'bg-green-100 dark:bg-green-900/30' :
-              course.subject === 'Psychology' ? 'bg-purple-100 dark:bg-purple-900/30' :
-              course.subject === 'Mathematics' ? 'bg-blue-100 dark:bg-blue-900/30' :
-              'bg-gray-100 dark:bg-gray-900/30'
-            }`}>
-              {course.subject === 'English' ? (
-                <BookOpen className="h-5 w-5 sm:h-6 sm:w-6 text-green-600 dark:text-green-400" />
-              ) : course.subject === 'Psychology' ? (
-                <Brain className="h-5 w-5 sm:h-6 sm:w-6 text-purple-600 dark:text-purple-400" />
-              ) : (
-                <GraduationCap className="h-5 w-5 sm:h-6 sm:w-6 text-blue-600 dark:text-blue-400" />
-              )}
-            </div>
-            <div className="flex-1 min-w-0">
-              <div className="flex items-center gap-2 mb-1">
-                <h3 className="font-semibold text-gray-900 dark:text-white text-sm sm:text-base truncate">{course.title}</h3>
-                {!course.is_free && !enrolled && (
-                  <Badge variant="outline" className="text-xs">₹{course.price}</Badge>
-                )}
-              </div>
-              <p className="text-sm text-gray-500 dark:text-gray-400 hidden sm:block">{course.description}</p>
-              {enrolled && (
-                <div className="mt-2">
-                  <Progress value={progress} className="h-1.5 sm:h-2" />
-                  <p className="text-xs text-gray-500 dark:text-gray-400 mt-1">{Math.round(progress)}% complete</p>
-                </div>
-              )}
-            </div>
-            {enrolled ? (
-              <Button size="sm" className="text-xs sm:text-sm">Continue</Button>
-            ) : (
-              <Button size="sm" onClick={() => onEnroll(course.id)} className="text-xs sm:text-sm">
-                {course.is_free ? 'Enroll' : `₹${course.price}`}
-              </Button>
-            )}
-          </div>
-        </CardContent>
-      </Card>
-    );
   };
 
   return (
@@ -815,165 +757,124 @@ function CoursesContent({
         <div className="flex gap-2 overflow-x-auto pb-2">
           {subjects.map((subject) => (
             <button
-              key={subject.id}
-              onClick={() => scrollToSection(subject.ref, subject.id)}
+              key={subject}
+              onClick={() => setActiveSubject(subject)}
               className={`px-4 py-2 rounded-lg text-sm font-medium whitespace-nowrap transition-colors ${
-                activeSection === subject.id
+                activeSubject === subject
                   ? 'bg-blue-600 text-white'
                   : 'bg-white dark:bg-gray-800 text-gray-700 dark:text-gray-300 hover:bg-gray-100 dark:hover:bg-gray-700'
               }`}
             >
-              {subject.label}
+              {subject === 'enrolled' ? 'Enrolled' : subject}
             </button>
           ))}
         </div>
       </div>
 
-      {/* Course Sections */}
-      <div className="space-y-8">
-        {/* Enrolled Courses Section */}
-        <div ref={enrolledRef} data-section="enrolled" className="scroll-mt-32">
-          <h2 className="text-xl font-semibold text-gray-900 dark:text-white mb-4">My Enrolled Courses</h2>
-          {coursesLoading ? (
-            <div className="grid gap-3">
-              {[1, 2].map((i) => (
-                <Card key={i}>
+      {/* Course Content */}
+      <div className="space-y-6">
+        <h2 className="text-xl font-semibold text-gray-900 dark:text-white">
+          {activeSubject === 'enrolled' ? 'My Enrolled Courses' : `${activeSubject} Courses`}
+        </h2>
+        
+        {coursesLoading ? (
+          <div className="grid gap-3">
+            {[1, 2].map((i) => (
+              <Card key={i}>
+                <CardContent className="p-3 sm:p-4">
+                  <div className="flex items-center gap-3">
+                    <Skeleton className="h-10 w-10 sm:h-12 sm:w-12 rounded-lg" />
+                    <div className="flex-1 space-y-2">
+                      <Skeleton className="h-4 sm:h-5 w-3/4" />
+                      <Skeleton className="h-3 sm:h-4 w-1/2 hidden sm:block" />
+                      <Skeleton className="h-2 w-full" />
+                    </div>
+                    <Skeleton className="h-8 w-20 sm:w-24" />
+                  </div>
+                </CardContent>
+              </Card>
+            ))}
+          </div>
+        ) : (
+          <div className="grid gap-3">
+            {getFilteredCourses(activeSubject).map((course) => {
+              const enrolled = isEnrolled(course.id);
+              const progress = getEnrollmentProgress(course.id);
+              
+              return (
+                <Card key={course.id} className="hover:shadow-lg transition-shadow">
                   <CardContent className="p-3 sm:p-4">
                     <div className="flex items-center gap-3">
-                      <Skeleton className="h-10 w-10 sm:h-12 sm:w-12 rounded-lg" />
-                      <div className="flex-1 space-y-2">
-                        <Skeleton className="h-4 sm:h-5 w-3/4" />
-                        <Skeleton className="h-3 sm:h-4 w-1/2 hidden sm:block" />
-                        <Skeleton className="h-2 w-full" />
+                      <div className={`p-2 rounded-lg ${
+                        course.subject === 'English' ? 'bg-green-100 dark:bg-green-900/30' :
+                        course.subject === 'Psychology' ? 'bg-purple-100 dark:bg-purple-900/30' :
+                        course.subject === 'Mathematics' ? 'bg-blue-100 dark:bg-blue-900/30' :
+                        'bg-gray-100 dark:bg-gray-900/30'
+                      }`}>
+                        {course.subject === 'English' ? (
+                          <BookOpen className="h-5 w-5 sm:h-6 sm:w-6 text-green-600 dark:text-green-400" />
+                        ) : course.subject === 'Psychology' ? (
+                          <Brain className="h-5 w-5 sm:h-6 sm:w-6 text-purple-600 dark:text-purple-400" />
+                        ) : (
+                          <GraduationCap className="h-5 w-5 sm:h-6 sm:w-6 text-blue-600 dark:text-blue-400" />
+                        )}
                       </div>
-                      <Skeleton className="h-8 w-20 sm:w-24" />
+                      <div className="flex-1 min-w-0">
+                        <div className="flex items-center gap-2 mb-1">
+                          <h3 className="font-semibold text-gray-900 dark:text-white text-sm sm:text-base truncate">{course.title}</h3>
+                          {!course.is_free && !enrolled && (
+                            <Badge variant="outline" className="text-xs">₹{course.price}</Badge>
+                          )}
+                        </div>
+                        <p className="text-sm text-gray-500 dark:text-gray-400 hidden sm:block">{course.description}</p>
+                        {enrolled && (
+                          <div className="mt-2">
+                            <Progress value={progress} className="h-1.5 sm:h-2" />
+                            <p className="text-xs text-gray-500 dark:text-gray-400 mt-1">{Math.round(progress)}% complete</p>
+                          </div>
+                        )}
+                      </div>
+                      {enrolled ? (
+                        <Button 
+                          size="sm" 
+                          className="text-xs sm:text-sm"
+                          onClick={() => onContinueCourse(course.id)}
+                        >
+                          Continue
+                        </Button>
+                      ) : (
+                        <Button size="sm" onClick={() => onEnroll(course.id)} className="text-xs sm:text-sm">
+                          {course.is_free ? 'Enroll' : `₹${course.price}`}
+                        </Button>
+                      )}
                     </div>
                   </CardContent>
                 </Card>
-              ))}
-            </div>
-          ) : enrolledCourses.length > 0 ? (
-            <div className="grid gap-3">
-              {enrolledCourses.map(enrollment => enrollment.course && renderCourseCard(enrollment.course))}
-            </div>
-          ) : (
-            <Card>
-              <CardContent className="p-8 text-center">
-                <BookOpen className="h-12 w-12 text-gray-400 mx-auto mb-4" />
-                <h3 className="font-semibold text-gray-900 dark:text-white mb-2">No enrolled courses yet</h3>
-                <p className="text-gray-500 dark:text-gray-400">Browse and enroll in courses to start learning</p>
-                <Button className="mt-4" onClick={() => scrollToSection(englishRef, 'English')}>
-                  Browse Courses
-                </Button>
-              </CardContent>
-            </Card>
-          )}
-        </div>
-
-        {/* English Courses Section */}
-        <div ref={englishRef} data-section="English" className="scroll-mt-32">
-          <h2 className="text-xl font-semibold text-gray-900 dark:text-white mb-4">English Courses</h2>
-          {coursesLoading ? (
-            <div className="grid gap-3">
-              {[1, 2].map((i) => (
-                <Card key={i}>
-                  <CardContent className="p-3 sm:p-4">
-                    <div className="flex items-center gap-3">
-                      <Skeleton className="h-10 w-10 sm:h-12 sm:w-12 rounded-lg" />
-                      <div className="flex-1 space-y-2">
-                        <Skeleton className="h-4 sm:h-5 w-3/4" />
-                        <Skeleton className="h-3 sm:h-4 w-1/2 hidden sm:block" />
-                      </div>
-                      <Skeleton className="h-8 w-20 sm:w-24" />
-                    </div>
-                  </CardContent>
-                </Card>
-              ))}
-            </div>
-          ) : getCoursesForSubject('English').length > 0 ? (
-            <div className="grid gap-3">
-              {getCoursesForSubject('English').map(renderCourseCard)}
-            </div>
-          ) : (
-            <Card>
-              <CardContent className="p-8 text-center">
-                <BookOpen className="h-12 w-12 text-gray-400 mx-auto mb-4" />
-                <h3 className="font-semibold text-gray-900 dark:text-white mb-2">No English courses available</h3>
-                <p className="text-gray-500 dark:text-gray-400">Check back later for new courses in this subject</p>
-              </CardContent>
-            </Card>
-          )}
-        </div>
-
-        {/* Psychology Courses Section */}
-        <div ref={psychologyRef} data-section="Psychology" className="scroll-mt-32">
-          <h2 className="text-xl font-semibold text-gray-900 dark:text-white mb-4">Psychology Courses</h2>
-          {coursesLoading ? (
-            <div className="grid gap-3">
-              {[1, 2].map((i) => (
-                <Card key={i}>
-                  <CardContent className="p-3 sm:p-4">
-                    <div className="flex items-center gap-3">
-                      <Skeleton className="h-10 w-10 sm:h-12 sm:w-12 rounded-lg" />
-                      <div className="flex-1 space-y-2">
-                        <Skeleton className="h-4 sm:h-5 w-3/4" />
-                        <Skeleton className="h-3 sm:h-4 w-1/2 hidden sm:block" />
-                      </div>
-                      <Skeleton className="h-8 w-20 sm:w-24" />
-                    </div>
-                  </CardContent>
-                </Card>
-              ))}
-            </div>
-          ) : getCoursesForSubject('Psychology').length > 0 ? (
-            <div className="grid gap-3">
-              {getCoursesForSubject('Psychology').map(renderCourseCard)}
-            </div>
-          ) : (
-            <Card>
-              <CardContent className="p-8 text-center">
-                <Brain className="h-12 w-12 text-gray-400 mx-auto mb-4" />
-                <h3 className="font-semibold text-gray-900 dark:text-white mb-2">No Psychology courses available</h3>
-                <p className="text-gray-500 dark:text-gray-400">Check back later for new courses in this subject</p>
-              </CardContent>
-            </Card>
-          )}
-        </div>
-
-        {/* Mathematics Courses Section */}
-        <div ref={mathematicsRef} data-section="Mathematics" className="scroll-mt-32">
-          <h2 className="text-xl font-semibold text-gray-900 dark:text-white mb-4">Mathematics Courses</h2>
-          {coursesLoading ? (
-            <div className="grid gap-3">
-              {[1, 2].map((i) => (
-                <Card key={i}>
-                  <CardContent className="p-3 sm:p-4">
-                    <div className="flex items-center gap-3">
-                      <Skeleton className="h-10 w-10 sm:h-12 sm:w-12 rounded-lg" />
-                      <div className="flex-1 space-y-2">
-                        <Skeleton className="h-4 sm:h-5 w-3/4" />
-                        <Skeleton className="h-3 sm:h-4 w-1/2 hidden sm:block" />
-                      </div>
-                      <Skeleton className="h-8 w-20 sm:w-24" />
-                    </div>
-                  </CardContent>
-                </Card>
-              ))}
-            </div>
-          ) : getCoursesForSubject('Mathematics').length > 0 ? (
-            <div className="grid gap-3">
-              {getCoursesForSubject('Mathematics').map(renderCourseCard)}
-            </div>
-          ) : (
-            <Card>
-              <CardContent className="p-8 text-center">
-                <GraduationCap className="h-12 w-12 text-gray-400 mx-auto mb-4" />
-                <h3 className="font-semibold text-gray-900 dark:text-white mb-2">No Mathematics courses available</h3>
-                <p className="text-gray-500 dark:text-gray-400">Check back later for new courses in this subject</p>
-              </CardContent>
-            </Card>
-          )}
-        </div>
+              );
+            })}
+            {getFilteredCourses(activeSubject).length === 0 && (
+              <Card>
+                <CardContent className="p-8 text-center">
+                  <BookOpen className="h-12 w-12 text-gray-400 mx-auto mb-4" />
+                  <h3 className="font-semibold text-gray-900 dark:text-white mb-2">
+                    {activeSubject === 'enrolled' ? 'No enrolled courses yet' : `No ${activeSubject} courses available`}
+                  </h3>
+                  <p className="text-gray-500 dark:text-gray-400">
+                    {activeSubject === 'enrolled' 
+                      ? 'Browse and enroll in courses to start learning' 
+                      : 'Check back later for new courses in this subject'
+                    }
+                  </p>
+                  {activeSubject === 'enrolled' && (
+                    <Button className="mt-4" onClick={() => setActiveSubject('English')}>
+                      Browse Courses
+                    </Button>
+                  )}
+                </CardContent>
+              </Card>
+            )}
+          </div>
+        )}
       </div>
     </div>
   );
