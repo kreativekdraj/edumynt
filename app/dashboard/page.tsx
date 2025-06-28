@@ -1,6 +1,6 @@
 'use client';
 
-import React, { useEffect, useState, useCallback } from 'react';
+import React, { useEffect, useState, useCallback, useRef } from 'react';
 import { useRouter, useSearchParams } from 'next/navigation';
 import { User } from '@supabase/supabase-js';
 import useEmblaCarousel from 'embla-carousel-react';
@@ -23,7 +23,13 @@ import {
   Target,
   Award,
   Settings,
-  ChevronLeft
+  ChevronLeft,
+  Eye,
+  Lock,
+  CheckCircle,
+  Calculator,
+  Lightbulb,
+  Zap
 } from 'lucide-react';
 
 import { supabase } from '@/lib/supabase';
@@ -730,7 +736,14 @@ function CoursesContent({ courses, enrolledCourses, onEnroll, coursesLoading, on
   coursesLoading: boolean,
   onContinueCourse: (courseId: string) => void
 }) {
-  const [activeSubject, setActiveSubject] = useState('enrolled');
+  const [activeSubject, setActiveSubject] = useState('all');
+  
+  // Refs for scrolling to sections
+  const allRef = useRef<HTMLDivElement>(null);
+  const enrolledRef = useRef<HTMLDivElement>(null);
+  const englishRef = useRef<HTMLDivElement>(null);
+  const psychologyRef = useRef<HTMLDivElement>(null);
+  const mathRef = useRef<HTMLDivElement>(null);
 
   const isEnrolled = (courseId: string) => {
     return enrolledCourses.some(enrollment => enrollment.course_id === courseId);
@@ -741,140 +754,264 @@ function CoursesContent({ courses, enrolledCourses, onEnroll, coursesLoading, on
     return enrollment?.progress || 0;
   };
 
-  const subjects = ['enrolled', 'English', 'Psychology', 'Mathematics'];
-  
-  const getFilteredCourses = (subject: string) => {
-    if (subject === 'enrolled') {
-      return enrolledCourses.map(e => e.course).filter(Boolean) as Course[];
+  // Subject tabs with icons
+  const subjects = [
+    { id: 'all', label: 'All', icon: GraduationCap, ref: allRef },
+    { id: 'enrolled', label: 'Enrolled', icon: CheckCircle, ref: enrolledRef },
+    { id: 'English', label: 'English', icon: BookOpen, ref: englishRef },
+    { id: 'Psychology', label: 'Psychology', icon: Brain, ref: psychologyRef },
+    { id: 'Mathematics', label: 'Math', icon: Calculator, ref: mathRef },
+  ];
+
+  const scrollToSection = (subjectId: string) => {
+    setActiveSubject(subjectId);
+    const subject = subjects.find(s => s.id === subjectId);
+    if (subject?.ref.current) {
+      subject.ref.current.scrollIntoView({ 
+        behavior: 'smooth', 
+        block: 'start',
+        inline: 'nearest'
+      });
     }
-    return courses.filter(course => course.subject === subject);
+  };
+
+  const getSubjectIcon = (subject: string) => {
+    const subjectLower = subject.toLowerCase();
+    if (subjectLower.includes('english')) {
+      return <BookOpen className="h-8 w-8 text-green-600 dark:text-green-400" />;
+    } else if (subjectLower.includes('psychology')) {
+      return <Brain className="h-8 w-8 text-purple-600 dark:text-purple-400" />;
+    } else if (subjectLower.includes('math')) {
+      return <Calculator className="h-8 w-8 text-blue-600 dark:text-blue-400" />;
+    }
+    return <GraduationCap className="h-8 w-8 text-gray-600 dark:text-gray-400" />;
+  };
+
+  const getSubjectColor = (subject: string) => {
+    const subjectLower = subject.toLowerCase();
+    if (subjectLower.includes('english')) {
+      return 'bg-green-100 dark:bg-green-900/30';
+    } else if (subjectLower.includes('psychology')) {
+      return 'bg-purple-100 dark:bg-purple-900/30';
+    } else if (subjectLower.includes('math')) {
+      return 'bg-blue-100 dark:bg-blue-900/30';
+    }
+    return 'bg-gray-100 dark:bg-gray-900/30';
+  };
+
+  const renderCourseCard = (course: Course) => {
+    const enrolled = isEnrolled(course.id);
+    const progress = getEnrollmentProgress(course.id);
+    
+    return (
+      <Card key={course.id} className="hover:shadow-lg transition-all duration-200 hover:scale-[1.02]">
+        <CardContent className="p-4">
+          <div className="flex items-center gap-4">
+            <div className={`p-3 rounded-xl ${getSubjectColor(course.subject)} flex-shrink-0`}>
+              {getSubjectIcon(course.subject)}
+            </div>
+            <div className="flex-1 min-w-0">
+              <div className="flex items-center gap-2 mb-2">
+                <h3 className="font-semibold text-gray-900 dark:text-white text-lg truncate">{course.title}</h3>
+                {!course.is_free && !enrolled && (
+                  <Badge variant="outline" className="text-xs">₹{course.price}</Badge>
+                )}
+                {course.is_free && (
+                  <Badge variant="outline" className="text-green-600 border-green-600 text-xs">Free</Badge>
+                )}
+                {enrolled && (
+                  <Badge className="bg-blue-600 text-xs">Enrolled</Badge>
+                )}
+              </div>
+              <p className="text-sm text-gray-600 dark:text-gray-400 mb-3 line-clamp-2">{course.description}</p>
+              {enrolled && (
+                <div className="mb-3">
+                  <div className="flex items-center justify-between text-xs text-gray-500 dark:text-gray-400 mb-1">
+                    <span>Progress</span>
+                    <span>{Math.round(progress)}%</span>
+                  </div>
+                  <Progress value={progress} className="h-2" />
+                </div>
+              )}
+            </div>
+            <div className="flex-shrink-0">
+              {enrolled ? (
+                <Button 
+                  size="sm" 
+                  className="text-sm"
+                  onClick={() => onContinueCourse(course.id)}
+                >
+                  Continue
+                </Button>
+              ) : (
+                <Button size="sm" onClick={() => onEnroll(course.id)} className="text-sm">
+                  {course.is_free ? 'Enroll' : `₹${course.price}`}
+                </Button>
+              )}
+            </div>
+          </div>
+        </CardContent>
+      </Card>
+    );
   };
 
   return (
     <div className="space-y-6">
-      {/* Subject Tabs */}
+      {/* Subject Tabs - Horizontal scrollable on mobile */}
       <div className="sticky top-16 z-30 bg-gray-50 dark:bg-gray-900 py-4 -mx-4 px-4 sm:-mx-6 sm:px-6 lg:-mx-8 lg:px-8">
-        <div className="flex gap-2 overflow-x-auto pb-2">
+        <div className="flex gap-2 overflow-x-auto pb-2 scrollbar-hide">
           {subjects.map((subject) => (
             <button
-              key={subject}
-              onClick={() => setActiveSubject(subject)}
-              className={`px-4 py-2 rounded-lg text-sm font-medium whitespace-nowrap transition-colors ${
-                activeSubject === subject
-                  ? 'bg-blue-600 text-white'
-                  : 'bg-white dark:bg-gray-800 text-gray-700 dark:text-gray-300 hover:bg-gray-100 dark:hover:bg-gray-700'
+              key={subject.id}
+              onClick={() => scrollToSection(subject.id)}
+              className={`flex items-center gap-2 px-4 py-3 rounded-xl text-sm font-medium whitespace-nowrap transition-all duration-200 ${
+                activeSubject === subject.id
+                  ? 'bg-blue-600 text-white shadow-lg scale-105'
+                  : 'bg-white dark:bg-gray-800 text-gray-700 dark:text-gray-300 hover:bg-gray-100 dark:hover:bg-gray-700 shadow-sm'
               }`}
             >
-              {subject === 'enrolled' ? 'Enrolled' : subject}
+              <subject.icon className="h-4 w-4" />
+              {subject.label}
             </button>
           ))}
         </div>
       </div>
 
-      {/* Course Content */}
-      <div className="space-y-6">
-        <h2 className="text-xl font-semibold text-gray-900 dark:text-white">
-          {activeSubject === 'enrolled' ? 'My Enrolled Courses' : `${activeSubject} Courses`}
-        </h2>
-        
-        {coursesLoading ? (
-          <div className="grid gap-3">
-            {[1, 2].map((i) => (
-              <Card key={i}>
-                <CardContent className="p-3 sm:p-4">
-                  <div className="flex items-center gap-3">
-                    <Skeleton className="h-10 w-10 sm:h-12 sm:w-12 rounded-lg" />
-                    <div className="flex-1 space-y-2">
-                      <Skeleton className="h-4 sm:h-5 w-3/4" />
-                      <Skeleton className="h-3 sm:h-4 w-1/2 hidden sm:block" />
-                      <Skeleton className="h-2 w-full" />
-                    </div>
-                    <Skeleton className="h-8 w-20 sm:w-24" />
-                  </div>
-                </CardContent>
-              </Card>
-            ))}
+      {/* Course Sections */}
+      <div className="space-y-8">
+        {/* All Courses Section */}
+        <section ref={allRef} className="scroll-mt-32">
+          <div className="flex items-center gap-3 mb-6">
+            <div className="bg-gradient-to-r from-blue-600 to-indigo-600 p-3 rounded-xl">
+              <GraduationCap className="h-6 w-6 text-white" />
+            </div>
+            <div>
+              <h2 className="text-2xl font-bold text-gray-900 dark:text-white">All Courses</h2>
+              <p className="text-gray-600 dark:text-gray-400">Explore our complete course catalog</p>
+            </div>
           </div>
-        ) : (
-          <div className="grid gap-3">
-            {getFilteredCourses(activeSubject).map((course) => {
-              const enrolled = isEnrolled(course.id);
-              const progress = getEnrollmentProgress(course.id);
-              
-              return (
-                <Card key={course.id} className="hover:shadow-lg transition-shadow">
-                  <CardContent className="p-3 sm:p-4">
-                    <div className="flex items-center gap-3">
-                      <div className={`p-2 rounded-lg ${
-                        course.subject === 'English' ? 'bg-green-100 dark:bg-green-900/30' :
-                        course.subject === 'Psychology' ? 'bg-purple-100 dark:bg-purple-900/30' :
-                        course.subject === 'Mathematics' ? 'bg-blue-100 dark:bg-blue-900/30' :
-                        'bg-gray-100 dark:bg-gray-900/30'
-                      }`}>
-                        {course.subject === 'English' ? (
-                          <BookOpen className="h-5 w-5 sm:h-6 sm:w-6 text-green-600 dark:text-green-400" />
-                        ) : course.subject === 'Psychology' ? (
-                          <Brain className="h-5 w-5 sm:h-6 sm:w-6 text-purple-600 dark:text-purple-400" />
-                        ) : (
-                          <GraduationCap className="h-5 w-5 sm:h-6 sm:w-6 text-blue-600 dark:text-blue-400" />
-                        )}
+          
+          {coursesLoading ? (
+            <div className="grid gap-4">
+              {[1, 2, 3].map((i) => (
+                <Card key={i}>
+                  <CardContent className="p-4">
+                    <div className="flex items-center gap-4">
+                      <Skeleton className="h-16 w-16 rounded-xl" />
+                      <div className="flex-1 space-y-2">
+                        <Skeleton className="h-5 w-3/4" />
+                        <Skeleton className="h-4 w-full" />
+                        <Skeleton className="h-2 w-full" />
                       </div>
-                      <div className="flex-1 min-w-0">
-                        <div className="flex items-center gap-2 mb-1">
-                          <h3 className="font-semibold text-gray-900 dark:text-white text-sm sm:text-base truncate">{course.title}</h3>
-                          {!course.is_free && !enrolled && (
-                            <Badge variant="outline" className="text-xs">₹{course.price}</Badge>
-                          )}
-                        </div>
-                        <p className="text-sm text-gray-500 dark:text-gray-400 hidden sm:block">{course.description}</p>
-                        {enrolled && (
-                          <div className="mt-2">
-                            <Progress value={progress} className="h-1.5 sm:h-2" />
-                            <p className="text-xs text-gray-500 dark:text-gray-400 mt-1">{Math.round(progress)}% complete</p>
-                          </div>
-                        )}
-                      </div>
-                      {enrolled ? (
-                        <Button 
-                          size="sm" 
-                          className="text-xs sm:text-sm"
-                          onClick={() => onContinueCourse(course.id)}
-                        >
-                          Continue
-                        </Button>
-                      ) : (
-                        <Button size="sm" onClick={() => onEnroll(course.id)} className="text-xs sm:text-sm">
-                          {course.is_free ? 'Enroll' : `₹${course.price}`}
-                        </Button>
-                      )}
+                      <Skeleton className="h-8 w-20" />
                     </div>
                   </CardContent>
                 </Card>
-              );
-            })}
-            {getFilteredCourses(activeSubject).length === 0 && (
-              <Card>
-                <CardContent className="p-8 text-center">
-                  <BookOpen className="h-12 w-12 text-gray-400 mx-auto mb-4" />
-                  <h3 className="font-semibold text-gray-900 dark:text-white mb-2">
-                    {activeSubject === 'enrolled' ? 'No enrolled courses yet' : `No ${activeSubject} courses available`}
-                  </h3>
-                  <p className="text-gray-500 dark:text-gray-400">
-                    {activeSubject === 'enrolled' 
-                      ? 'Browse and enroll in courses to start learning' 
-                      : 'Check back later for new courses in this subject'
-                    }
-                  </p>
-                  {activeSubject === 'enrolled' && (
-                    <Button className="mt-4" onClick={() => setActiveSubject('English')}>
-                      Browse Courses
-                    </Button>
-                  )}
-                </CardContent>
-              </Card>
-            )}
+              ))}
+            </div>
+          ) : (
+            <div className="grid gap-4">
+              {courses.map(renderCourseCard)}
+            </div>
+          )}
+        </section>
+
+        {/* Enrolled Courses Section */}
+        <section ref={enrolledRef} className="scroll-mt-32">
+          <div className="flex items-center gap-3 mb-6">
+            <div className="bg-gradient-to-r from-green-600 to-emerald-600 p-3 rounded-xl">
+              <CheckCircle className="h-6 w-6 text-white" />
+            </div>
+            <div>
+              <h2 className="text-2xl font-bold text-gray-900 dark:text-white">My Enrolled Courses</h2>
+              <p className="text-gray-600 dark:text-gray-400">Continue your learning journey</p>
+            </div>
           </div>
-        )}
+          
+          {coursesLoading ? (
+            <div className="grid gap-4">
+              {[1, 2].map((i) => (
+                <Card key={i}>
+                  <CardContent className="p-4">
+                    <div className="flex items-center gap-4">
+                      <Skeleton className="h-16 w-16 rounded-xl" />
+                      <div className="flex-1 space-y-2">
+                        <Skeleton className="h-5 w-3/4" />
+                        <Skeleton className="h-4 w-full" />
+                        <Skeleton className="h-2 w-full" />
+                      </div>
+                      <Skeleton className="h-8 w-20" />
+                    </div>
+                  </CardContent>
+                </Card>
+              ))}
+            </div>
+          ) : enrolledCourses.length > 0 ? (
+            <div className="grid gap-4">
+              {enrolledCourses.map(enrollment => enrollment.course && renderCourseCard(enrollment.course))}
+            </div>
+          ) : (
+            <Card>
+              <CardContent className="p-8 text-center">
+                <CheckCircle className="h-16 w-16 text-gray-400 mx-auto mb-4" />
+                <h3 className="font-semibold text-gray-900 dark:text-white mb-2">No enrolled courses yet</h3>
+                <p className="text-gray-500 dark:text-gray-400 mb-4">Start learning by enrolling in a course below</p>
+                <Button onClick={() => scrollToSection('all')}>Browse All Courses</Button>
+              </CardContent>
+            </Card>
+          )}
+        </section>
+
+        {/* English Courses Section */}
+        <section ref={englishRef} className="scroll-mt-32">
+          <div className="flex items-center gap-3 mb-6">
+            <div className="bg-gradient-to-r from-green-600 to-teal-600 p-3 rounded-xl">
+              <BookOpen className="h-6 w-6 text-white" />
+            </div>
+            <div>
+              <h2 className="text-2xl font-bold text-gray-900 dark:text-white">English Courses</h2>
+              <p className="text-gray-600 dark:text-gray-400">Master English grammar and literature</p>
+            </div>
+          </div>
+          
+          <div className="grid gap-4">
+            {courses.filter(course => course.subject === 'English').map(renderCourseCard)}
+          </div>
+        </section>
+
+        {/* Psychology Courses Section */}
+        <section ref={psychologyRef} className="scroll-mt-32">
+          <div className="flex items-center gap-3 mb-6">
+            <div className="bg-gradient-to-r from-purple-600 to-violet-600 p-3 rounded-xl">
+              <Brain className="h-6 w-6 text-white" />
+            </div>
+            <div>
+              <h2 className="text-2xl font-bold text-gray-900 dark:text-white">Psychology Courses</h2>
+              <p className="text-gray-600 dark:text-gray-400">Understand human behavior and learning</p>
+            </div>
+          </div>
+          
+          <div className="grid gap-4">
+            {courses.filter(course => course.subject === 'Psychology').map(renderCourseCard)}
+          </div>
+        </section>
+
+        {/* Mathematics Courses Section */}
+        <section ref={mathRef} className="scroll-mt-32">
+          <div className="flex items-center gap-3 mb-6">
+            <div className="bg-gradient-to-r from-blue-600 to-cyan-600 p-3 rounded-xl">
+              <Calculator className="h-6 w-6 text-white" />
+            </div>
+            <div>
+              <h2 className="text-2xl font-bold text-gray-900 dark:text-white">Mathematics Courses</h2>
+              <p className="text-gray-600 dark:text-gray-400">Build strong quantitative skills</p>
+            </div>
+          </div>
+          
+          <div className="grid gap-4">
+            {courses.filter(course => course.subject === 'Mathematics').map(renderCourseCard)}
+          </div>
+        </section>
       </div>
     </div>
   );
