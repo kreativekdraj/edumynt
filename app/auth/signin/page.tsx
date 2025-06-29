@@ -14,12 +14,14 @@ import { Input } from '@/components/ui/input';
 import { Label } from '@/components/ui/label';
 import { Alert, AlertDescription } from '@/components/ui/alert';
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/components/ui/card';
+import { useAuth } from '@/components/auth-provider';
 
 export default function SignInPage() {
   const [showPassword, setShowPassword] = useState(false);
   const [isLoading, setIsLoading] = useState(false);
   const [error, setError] = useState<string | null>(null);
   const router = useRouter();
+  const { user } = useAuth();
 
   const {
     register,
@@ -29,20 +31,30 @@ export default function SignInPage() {
     resolver: zodResolver(signInSchema),
   });
 
+  // Redirect if already logged in
+  if (user) {
+    router.push('/dashboard');
+    return null;
+  }
+
   const onSubmit = async (data: SignInFormData) => {
     setIsLoading(true);
     setError(null);
 
-    const result = await signIn(data.email, data.password);
+    try {
+      const result = await signIn(data.email, data.password);
 
-    if (result.success) {
-      router.push('/dashboard');
-      router.refresh();
-    } else {
-      setError(result.error || 'An unexpected error occurred');
+      if (result.success) {
+        router.push('/dashboard');
+        router.refresh();
+      } else {
+        setError(result.error || 'An unexpected error occurred');
+      }
+    } catch (error) {
+      setError('An unexpected error occurred. Please try again.');
+    } finally {
+      setIsLoading(false);
     }
-
-    setIsLoading(false);
   };
 
   return (
